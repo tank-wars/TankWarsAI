@@ -24,6 +24,8 @@ namespace GameClient
             Communicator.Instance.MessageReceived += Instance_MessageReceived;
             Communicator.Instance.MessageReceiveError += Instance_MessageReceiveError;
             Communicator.Instance.MessageReceiverStopped += Instance_MessageReceiverStopped;
+
+            
         }
 
         private void Instance_MessageReceiverStopped(object sender, EventArgs e)
@@ -40,6 +42,10 @@ namespace GameClient
         private void Instance_MessageReceived(object Sender, Communicator.MessageReceivedEventArgs args)
         {
             txtReceived.AppendText(args.Message + Environment.NewLine);
+            MessageParser parser = MessageParser.Instance;
+            Messages.ServerMessage message = parser.Parse(args.Message);
+            if(message != null)
+                txtReceived.AppendText(message.ToString() + Environment.NewLine);
             Debug.WriteLine(args.Message);
         }
 

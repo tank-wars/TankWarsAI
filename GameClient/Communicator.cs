@@ -24,7 +24,8 @@ namespace GameClient
         
         private Communicator()
         {
-
+            
+            
         }
 
     
@@ -46,6 +47,7 @@ namespace GameClient
         private static Communicator mInstance = null;
         public static Communicator Instance
         {
+           
             get
             {
                 if (mInstance == null)
