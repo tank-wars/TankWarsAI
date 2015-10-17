@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 
 namespace GameClient.Messages
 {
+    /*
+    Message sent from server to client, accepting the clients join request
+    */
     class JoinAcceptanceMessage : ServerMessage
     {
-
+        /*
+        The locations of players
+        */
         private PlayerDetails[] playerDetails;
         public PlayerDetails[] PlayerDetails
         {
@@ -38,6 +43,10 @@ namespace GameClient.Messages
             return builder.ToString();
         }
 
+        /*
+            The parser to detect and parse JoinAcceptanceMessage
+        */
+
         public class JoinAcceptanceMessageParser : ServerMessage.ServerMessageParser
         {
             private JoinAcceptanceMessageParser()
@@ -60,6 +69,7 @@ namespace GameClient.Messages
                 {
                     //S:P0;0,0;0#
                     GameClient.PlayerDetails[] players = new GameClient.PlayerDetails[sections.Length - 1];
+                    //identify individual player details received
                     for(int i = 1; i < sections.Length; i++)
                     {
                         string section = sections[i];
@@ -78,6 +88,7 @@ namespace GameClient.Messages
                 }
                 else
                 {
+                    //Not a valid join acceptance message
                     return null;
                 }
             }

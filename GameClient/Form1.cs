@@ -140,5 +140,23 @@ namespace GameClient
                 MessageBox.Show("Unable to Send Message");
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Messages.ClientMessage msg = new Messages.ShootMessage();
+                Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                txtReceived.AppendText(msg.ToString() + Environment.NewLine);
+            }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("Unable to Send Message");
+            }
+            catch (System.Net.Sockets.SocketException)
+            {
+                MessageBox.Show("Unable to Send Message");
+            }
+        }
     }
 }
