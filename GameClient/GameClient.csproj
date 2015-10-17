@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,7 +55,9 @@
     <Compile Include="Direction.cs" />
     <Compile Include="JoinAcceptanceMessage.cs" />
     <Compile Include="JoinFailureMessage.cs" />
+    <Compile Include="JoinRequestMessage.cs" />
     <Compile Include="PlayerDetails.cs" />
+    <Compile Include="PlayerMovementMessage.cs" />
     <Compile Include="ServerMessage.cs" />
     <Compile Include="Communicator.cs" />
     <Compile Include="Form1.cs">

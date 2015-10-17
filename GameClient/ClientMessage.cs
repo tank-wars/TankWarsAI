@@ -11,7 +11,13 @@ namespace GameClient.Messages
     */
     abstract class ClientMessage : AbstractMessage
     {
+        /*
+        Obrain a string representation of Client Message
+        */
         public abstract override string ToString();
+        /*
+           Generate the string which sould be sent to the server
+        */
         public abstract String GenerateStringMessage();
     }
 }

@@ -53,5 +53,92 @@ namespace GameClient
         {
             Communicator.Instance.SendMessage(txtSend.Text);
         }
+
+        private void btnJoin_Click(object sender, EventArgs e)
+        {
+            try {
+                Messages.ClientMessage msg = new Messages.JoinRequestMessage();
+                Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                txtReceived.AppendText(msg.ToString() + Environment.NewLine);
+             }
+            catch(System.IO.IOException)
+            {
+                MessageBox.Show("Unable to Send Message");
+            }
+            catch (System.Net.Sockets.SocketException)
+            {
+                MessageBox.Show("Unable to Send Message");
+            }
+        }
+
+        private void btnNorth_Click(object sender, EventArgs e)
+        {
+            try {
+                Messages.ClientMessage msg = new Messages.PlayerMovementMessage(Direction.North);
+                Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                txtReceived.AppendText(msg.ToString() + Environment.NewLine);
+            }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("Unable to Send Message");
+            }
+            catch (System.Net.Sockets.SocketException)
+            {
+                MessageBox.Show("Unable to Send Message");
+            }
+        }
+
+        private void btnSouth_Click(object sender, EventArgs e)
+        {
+            try { 
+                Messages.ClientMessage msg = new Messages.PlayerMovementMessage(Direction.South);
+                Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                txtReceived.AppendText(msg.ToString() + Environment.NewLine);
+            }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("Unable to Send Message");
+            }
+            catch (System.Net.Sockets.SocketException)
+            {
+                MessageBox.Show("Unable to Send Message");
+            }
+        }
+
+        private void btnWest_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Messages.ClientMessage msg = new Messages.PlayerMovementMessage(Direction.West);
+                Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                txtReceived.AppendText(msg.ToString() + Environment.NewLine);
+            }
+            catch(System.IO.IOException)
+            {
+                MessageBox.Show("Unable to Send Message");
+            }
+            catch (System.Net.Sockets.SocketException)
+            {
+                MessageBox.Show("Unable to Send Message");
+            }
+
+        }
+
+        private void btnEast_Click(object sender, EventArgs e)
+        {
+            try { 
+                Messages.ClientMessage msg = new Messages.PlayerMovementMessage(Direction.East);
+                Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                txtReceived.AppendText(msg.ToString() + Environment.NewLine);
+            }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("Unable to Send Message");
+            }
+            catch (System.Net.Sockets.SocketException)
+            {
+                MessageBox.Show("Unable to Send Message");
+            }
+        }
     }
 }
