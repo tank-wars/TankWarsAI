@@ -22,5 +22,15 @@ namespace GameClient
         {
             return "(" + x.ToString() + ", " + y.ToString() + ")";
         }
+
+        public static string coordinateArrayToString(Coordinate[] para)
+        {
+            StringBuilder builder = new StringBuilder();
+            foreach (Coordinate coordinate in para)
+            {
+                builder.Append(coordinate.ToString() + ",");
+            }
+            return builder.ToString();
+        }
     }
 }

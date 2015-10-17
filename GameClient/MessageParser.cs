@@ -27,11 +27,9 @@ namespace GameClient
             //setup chain of responsibility here
             rootNode = null;
             rootNode = new ParserNode(Messages.JoinAcceptanceMessage.JoinAcceptanceMessageParser.Instance);
-            ParserNode node2 = new ParserNode(Messages.JoinFailureMessage.JoinFailureMessageParser.Instance);
-            rootNode.NextNode = node2;
-
-            ParserNode node3 = new ParserNode(Messages.NegativeHonourMessage.NegativeHonourMessageParser.Instance);
-            node2.NextNode = node3;
+            rootNode.NextNode = new ParserNode(Messages.JoinFailureMessage.JoinFailureMessageParser.Instance);
+            rootNode.NextNode = new ParserNode(Messages.NegativeHonourMessage.NegativeHonourMessageParser.Instance);
+            rootNode.NextNode = new ParserNode(Messages.GameInitiationMessage.GameInitiationMessageParser.Instance);
         }
 
         public static bool ValidateMessageFooter(String message)
