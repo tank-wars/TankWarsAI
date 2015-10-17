@@ -52,6 +52,8 @@
     <Compile Include="AbstractMessage.cs" />
     <Compile Include="Brick.cs" />
     <Compile Include="ClientMessage.cs" />
+    <Compile Include="Coin.cs" />
+    <Compile Include="CoinsAvailableMessage.cs" />
     <Compile Include="Coordinate.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="GameInitiationMessage.cs" />
