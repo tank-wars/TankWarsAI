@@ -62,6 +62,8 @@
     <Compile Include="JoinAcceptanceMessage.cs" />
     <Compile Include="JoinFailureMessage.cs" />
     <Compile Include="JoinRequestMessage.cs" />
+    <Compile Include="LifePack.cs" />
+    <Compile Include="LifePackAvailableMessage.cs" />
     <Compile Include="MapDetails.cs" />
     <Compile Include="NegativeHonourMessage.cs" />
     <Compile Include="PlayerDetails.cs" />

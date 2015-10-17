@@ -28,10 +28,11 @@ namespace GameClient
             rootNode = null;
             rootNode = new ParserNode(Messages.JoinAcceptanceMessage.JoinAcceptanceMessageParser.Instance);
             rootNode.NextNode = new ParserNode(Messages.JoinFailureMessage.JoinFailureMessageParser.Instance);
-            rootNode.NextNode = new ParserNode(Messages.NegativeHonourMessage.NegativeHonourMessageParser.Instance);
-            rootNode.NextNode = new ParserNode(Messages.GameInitiationMessage.GameInitiationMessageParser.Instance);
-            rootNode.NextNode = new ParserNode(Messages.GlobalUpdateMessage.GlobalUpdateMessageParser.Instance);
-            rootNode.NextNode = new ParserNode(Messages.CoinsAvailableMessage.CoinAvailbleMessageParser.Instance);
+            rootNode.NextNode.NextNode = new ParserNode(Messages.NegativeHonourMessage.NegativeHonourMessageParser.Instance);
+            rootNode.NextNode.NextNode.NextNode = new ParserNode(Messages.GameInitiationMessage.GameInitiationMessageParser.Instance);
+            rootNode.NextNode.NextNode.NextNode.NextNode = new ParserNode(Messages.GlobalUpdateMessage.GlobalUpdateMessageParser.Instance);
+            rootNode.NextNode.NextNode.NextNode.NextNode.NextNode = new ParserNode(Messages.CoinsAvailableMessage.CoinAvailbleMessageParser.Instance);
+            rootNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode = new ParserNode(Messages.LifePackAvailableMessage.LifePackAvailbleMessageParser.Instance);
         }
 
         public static bool ValidateMessageFooter(String message)
