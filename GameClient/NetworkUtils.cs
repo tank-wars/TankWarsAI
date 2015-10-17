@@ -11,6 +11,10 @@ namespace GameClient
     //Support tool to safely close connections
     class NetworkUtils
     {
+        private NetworkUtils()
+        {
+
+        }
         public static void CloseSafely(Socket socket)
         {
             if(socket != null)

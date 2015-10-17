@@ -22,12 +22,13 @@ namespace GameClient
             }
         }
 
-        public MessageParser()
+        private MessageParser()
         {
             //setup chain of responsibility here
             rootNode = null;
             rootNode = new ParserNode(Messages.JoinAcceptanceMessage.JoinAcceptanceMessageParser.Instance);
-            
+            ParserNode node2 = new ParserNode(Messages.JoinFailureMessage.JoinFailureMessageParser.Instance);
+            rootNode.NextNode = node2;
         }
 
         public static bool ValidateMessageFooter(String message)

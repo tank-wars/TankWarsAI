@@ -23,7 +23,7 @@ namespace GameClient.Messages
             /*
                 Returned parsed object if success. Otherwise return null
             */
-            public abstract ServerMessage TryParse(string[] Message);
+            public abstract ServerMessage TryParse(string[] sections);
         }
 
     }

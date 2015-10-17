@@ -8,7 +8,10 @@ namespace GameClient
 {
     class Tokenizer
     {
+        private Tokenizer()
+        {
 
+        }
         /*
             Sections are seperated by colon
         */

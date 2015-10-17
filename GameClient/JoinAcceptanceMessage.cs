@@ -40,6 +40,10 @@ namespace GameClient.Messages
 
         public class JoinAcceptanceMessageParser : ServerMessage.ServerMessageParser
         {
+            private JoinAcceptanceMessageParser()
+            {
+
+            }
             private static JoinAcceptanceMessageParser instance = null;
             public static JoinAcceptanceMessageParser Instance
             {
