@@ -56,6 +56,7 @@
     <Compile Include="JoinAcceptanceMessage.cs" />
     <Compile Include="JoinFailureMessage.cs" />
     <Compile Include="JoinRequestMessage.cs" />
+    <Compile Include="NegativeHonourMessage.cs" />
     <Compile Include="PlayerDetails.cs" />
     <Compile Include="PlayerMovementMessage.cs" />
     <Compile Include="ServerMessage.cs" />

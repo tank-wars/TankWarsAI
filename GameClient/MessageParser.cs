@@ -29,6 +29,9 @@ namespace GameClient
             rootNode = new ParserNode(Messages.JoinAcceptanceMessage.JoinAcceptanceMessageParser.Instance);
             ParserNode node2 = new ParserNode(Messages.JoinFailureMessage.JoinFailureMessageParser.Instance);
             rootNode.NextNode = node2;
+
+            ParserNode node3 = new ParserNode(Messages.NegativeHonourMessage.NegativeHonourMessageParser.Instance);
+            node2.NextNode = node3;
         }
 
         public static bool ValidateMessageFooter(String message)
@@ -67,7 +70,10 @@ namespace GameClient
 
             
         }
-
+        /*
+        Message Parser uses a chain of responsibility of specific parsers that could parse specific types of messages. 
+        This chain of responsibility is formed using ParserNode objects, containing reference to specific parser and next node.
+        */
         private class ParserNode
         {
             private Messages.ServerMessage.ServerMessageParser parser;
