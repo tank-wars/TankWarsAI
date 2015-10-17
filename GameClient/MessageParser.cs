@@ -30,6 +30,7 @@ namespace GameClient
             rootNode.NextNode = new ParserNode(Messages.JoinFailureMessage.JoinFailureMessageParser.Instance);
             rootNode.NextNode = new ParserNode(Messages.NegativeHonourMessage.NegativeHonourMessageParser.Instance);
             rootNode.NextNode = new ParserNode(Messages.GameInitiationMessage.GameInitiationMessageParser.Instance);
+            rootNode.NextNode = new ParserNode(Messages.GlobalUpdateMessage.GlobalUpdateMessageParser.Instance);
         }
 
         public static bool ValidateMessageFooter(String message)

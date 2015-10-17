@@ -40,13 +40,13 @@ namespace GameClient
             Coordinates are separated by ,. A parameter may have 1 or 2 coordinates
         */
 
-/*        public static String[] TokernizeCoordinates(String parameter)
-        {
-            string trimmedParameter = parameter.Trim();
+        /*        public static String[] TokernizeCoordinates(String parameter)
+                {
+                    string trimmedParameter = parameter.Trim();
 
-            string[] paras = trimmedParameter.Split(new char[] { ";"[0] }, StringSplitOptions.RemoveEmptyEntries);
-            return paras;
-        }*/
+                    string[] paras = trimmedParameter.Split(new char[] { ";"[0] }, StringSplitOptions.RemoveEmptyEntries);
+                    return paras;
+                }*/
         public static Coordinate TokernizeCoordinates(String parameter)
         {
             string trimmedParameter = parameter.Trim();
@@ -54,6 +54,21 @@ namespace GameClient
             string[] paras = trimmedParameter.Split(new char[] { ","[0] }, StringSplitOptions.RemoveEmptyEntries);
             Coordinate c = new Coordinate(Convert.ToInt32(paras[0]), Convert.ToInt32(paras[1]));
             return c;
+        }
+
+
+        public static int[] TokernizeBrickDamage(String parameter)
+        {
+            string trimmedParameter = parameter.Trim();
+
+            string[] paras = trimmedParameter.Split(new char[] { ","[0] }, StringSplitOptions.RemoveEmptyEntries);
+            int[] intParas = new int[paras.Length];
+
+            for(int i = 0; i < paras.Length; i++)
+            {
+                intParas[i] = Convert.ToInt32(paras[i]);
+            }
+            return intParas;
         }
     }
 }
