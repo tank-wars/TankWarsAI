@@ -58,7 +58,7 @@ namespace GameClient
             {
                 Console.Write(message);
                 Console.Out.Flush();
-                txtReceived.AppendText(message);
+               // txtReceived.AppendText(message);
             }
         }
         /*
@@ -219,6 +219,22 @@ namespace GameClient
             }
         }
 
-      
+        private void pnlMapGUI_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics graphics = e.Graphics;
+            e.Graphics.Clear(Color.White);
+            DemoGUI gui = new DemoGUI(graphics, new Point(), Math.Min(pnlMapGUI.Width, pnlMapGUI.Height));
+            gui.DrawGrid();
+            gui.DrawTank(0, new Coordinate(2, 2), Direction.North);
+            gui.DrawTank(1, new Coordinate(5, 2), Direction.East);
+            gui.DrawTank(2, new Coordinate(2, 5), Direction.South);
+            gui.DrawTank(3, new Coordinate(3, 3), Direction.West);
+        }
+
+        private void pnlMapGUI_Resize(object sender, EventArgs e)
+        {
+            pnlMapGUI.Invalidate();
+            
+        }
     }
 }

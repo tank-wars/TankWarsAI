@@ -30,7 +30,6 @@
         {
             this.txtSend = new System.Windows.Forms.TextBox();
             this.btnSendRAW = new System.Windows.Forms.Button();
-            this.txtReceived = new System.Windows.Forms.TextBox();
             this.btnJoin = new System.Windows.Forms.Button();
             this.btnNorth = new System.Windows.Forms.Button();
             this.btnSouth = new System.Windows.Forms.Button();
@@ -45,6 +44,7 @@
             this.txtHost = new System.Windows.Forms.TextBox();
             this.lblHost = new System.Windows.Forms.Label();
             this.btnConnect = new System.Windows.Forms.Button();
+            this.pnlMapGUI = new System.Windows.Forms.Panel();
             this.pnlControl.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,20 +68,6 @@
             this.btnSendRAW.Text = "Send";
             this.btnSendRAW.UseVisualStyleBackColor = true;
             this.btnSendRAW.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // txtReceived
-            // 
-            this.txtReceived.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtReceived.Location = new System.Drawing.Point(12, 46);
-            this.txtReceived.Multiline = true;
-            this.txtReceived.Name = "txtReceived";
-            this.txtReceived.ReadOnly = true;
-            this.txtReceived.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtReceived.Size = new System.Drawing.Size(431, 306);
-            this.txtReceived.TabIndex = 2;
-            this.txtReceived.Text = "Map Preview will appear here";
             // 
             // btnJoin
             // 
@@ -239,11 +225,24 @@
             this.btnConnect.UseVisualStyleBackColor = true;
             this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
             // 
+            // pnlMapGUI
+            // 
+            this.pnlMapGUI.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlMapGUI.Location = new System.Drawing.Point(16, 35);
+            this.pnlMapGUI.Name = "pnlMapGUI";
+            this.pnlMapGUI.Size = new System.Drawing.Size(427, 325);
+            this.pnlMapGUI.TabIndex = 17;
+            this.pnlMapGUI.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlMapGUI_Paint);
+            this.pnlMapGUI.Resize += new System.EventHandler(this.pnlMapGUI_Resize);
+            // 
             // frmDemoParser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(536, 421);
+            this.Controls.Add(this.pnlMapGUI);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.lblHost);
             this.Controls.Add(this.txtHost);
@@ -252,7 +251,6 @@
             this.Controls.Add(this.chkEchoSent);
             this.Controls.Add(this.chkEchoRaw);
             this.Controls.Add(this.chkEchoConsole);
-            this.Controls.Add(this.txtReceived);
             this.Controls.Add(this.btnSendRAW);
             this.Controls.Add(this.txtSend);
             this.Name = "frmDemoParser";
@@ -268,7 +266,6 @@
 
         private System.Windows.Forms.TextBox txtSend;
         private System.Windows.Forms.Button btnSendRAW;
-        private System.Windows.Forms.TextBox txtReceived;
         private System.Windows.Forms.Button btnJoin;
         private System.Windows.Forms.Button btnNorth;
         private System.Windows.Forms.Button btnSouth;
@@ -283,6 +280,7 @@
         private System.Windows.Forms.TextBox txtHost;
         private System.Windows.Forms.Label lblHost;
         private System.Windows.Forms.Button btnConnect;
+        private System.Windows.Forms.Panel pnlMapGUI;
     }
 }
 
