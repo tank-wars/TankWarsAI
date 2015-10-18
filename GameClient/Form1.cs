@@ -11,21 +11,31 @@ using System.Windows.Forms;
 
 namespace GameClient
 {
-    public partial class Form1 : Form
+    public partial class frmDemoParser : Form
     {
-        public Form1()
+        public frmDemoParser()
         {
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Communicator.Instance.Instalatize(new Communicator.Configuration(7000, "localhost", 6000));
+         
+
+            
+        }
+
+        private void btnConnect_Click(object sender, EventArgs e)
+        {
+            Communicator.Instance.Instalatize(new Communicator.Configuration(7000, txtHost.Text, 6000));
             Communicator.Instance.MessageReceived += Instance_MessageReceived;
             Communicator.Instance.MessageReceiveError += Instance_MessageReceiveError;
             Communicator.Instance.MessageReceiverStopped += Instance_MessageReceiverStopped;
 
-            
+            btnSendRAW.Enabled = true;
+            pnlControl.Enabled = true;
+            btnConnect.Enabled = false;
+            txtHost.Enabled = false;
         }
 
         private void Instance_MessageReceiverStopped(object sender, EventArgs e)
@@ -39,13 +49,56 @@ namespace GameClient
 
         }
 
+        /*
+            Writes to console
+        */
+        public void Echo(String message)
+        {
+            if (chkEchoConsole.Checked)
+            {
+                Console.Write(message);
+                Console.Out.Flush();
+                txtReceived.AppendText(message);
+            }
+        }
+        /*
+            Echo a raw message received
+        */
+        public void EchoRaw(String message)
+        {
+            Echo("Raw Message: " + message + Environment.NewLine);
+        }
+
+        /*
+            Echo a sent message
+        */
+        public void EchoSent(String message)
+        {
+            if(chkEchoSent.Checked)
+                Echo("Sent: " + message + Environment.NewLine);
+        }
+        /*
+            Echo an output from parser
+        */
+        public void EchoParsed(String message)
+        {
+            if (chkEchoParsed.Checked)
+                Echo(message + Environment.NewLine);
+        }
         private void Instance_MessageReceived(object Sender, Communicator.MessageReceivedEventArgs args)
         {
-            txtReceived.AppendText(args.Message + Environment.NewLine);
+            if (chkEchoRaw.Checked)
+                EchoRaw(args.Message);
+            //txtReceived.AppendText(args.Message + Environment.NewLine);
             MessageParser parser = MessageParser.Instance;
             Messages.ServerMessage message = parser.Parse(args.Message);
-            if(message != null)
-                txtReceived.AppendText(message.ToString() + Environment.NewLine);
+            if (message != null)
+                EchoParsed(message.ToString());
+            else
+            {
+                MessageBox.Show("Unidentified Message " + args.Message);
+            }
+                //txtReceived.AppendText(message.ToString() + Environment.NewLine);
             Debug.WriteLine(args.Message);
         }
 
@@ -59,7 +112,8 @@ namespace GameClient
             try {
                 Messages.ClientMessage msg = new Messages.JoinRequestMessage();
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
-                txtReceived.AppendText(msg.ToString() + Environment.NewLine);
+                EchoSent(msg.GenerateStringMessage());
+                //txtReceived.AppendText(msg.ToString() + Environment.NewLine);
              }
             catch(System.IO.IOException)
             {
@@ -76,7 +130,8 @@ namespace GameClient
             try {
                 Messages.ClientMessage msg = new Messages.PlayerMovementMessage(Direction.North);
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
-                txtReceived.AppendText(msg.ToString() + Environment.NewLine);
+                EchoSent(msg.GenerateStringMessage());
+                //txtReceived.AppendText(msg.ToString() + Environment.NewLine);
             }
             catch (System.IO.IOException)
             {
@@ -93,7 +148,8 @@ namespace GameClient
             try { 
                 Messages.ClientMessage msg = new Messages.PlayerMovementMessage(Direction.South);
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
-                txtReceived.AppendText(msg.ToString() + Environment.NewLine);
+                EchoSent(msg.GenerateStringMessage());
+                //txtReceived.AppendText(msg.ToString() + Environment.NewLine);
             }
             catch (System.IO.IOException)
             {
@@ -111,7 +167,8 @@ namespace GameClient
             {
                 Messages.ClientMessage msg = new Messages.PlayerMovementMessage(Direction.West);
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
-                txtReceived.AppendText(msg.ToString() + Environment.NewLine);
+                EchoSent(msg.GenerateStringMessage());
+                //txtReceived.AppendText(msg.ToString() + Environment.NewLine);
             }
             catch(System.IO.IOException)
             {
@@ -124,12 +181,14 @@ namespace GameClient
 
         }
 
+
         private void btnEast_Click(object sender, EventArgs e)
         {
             try { 
                 Messages.ClientMessage msg = new Messages.PlayerMovementMessage(Direction.East);
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
-                txtReceived.AppendText(msg.ToString() + Environment.NewLine);
+                EchoSent(msg.GenerateStringMessage());
+                //txtReceived.AppendText(msg.ToString() + Environment.NewLine);
             }
             catch (System.IO.IOException)
             {
@@ -147,7 +206,8 @@ namespace GameClient
             {
                 Messages.ClientMessage msg = new Messages.ShootMessage();
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
-                txtReceived.AppendText(msg.ToString() + Environment.NewLine);
+                EchoSent(msg.GenerateStringMessage());
+                //txtReceived.AppendText(msg.ToString() + Environment.NewLine);
             }
             catch (System.IO.IOException)
             {
@@ -158,5 +218,7 @@ namespace GameClient
                 MessageBox.Show("Unable to Send Message");
             }
         }
+
+      
     }
 }
