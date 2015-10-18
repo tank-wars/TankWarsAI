@@ -12,7 +12,7 @@ namespace GameClient.Messages
 
         public override void Execute()
         {
-            GameWorld.Instance.lifePack.Add(lifePack);
+            GameWorld.Instance.LifePacks.Add(lifePack);
         }
 
         public override string ToString()

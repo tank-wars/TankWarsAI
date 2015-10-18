@@ -34,7 +34,8 @@ namespace GameClient.Messages
 
         public override void Execute()
         {
-            throw new NotImplementedException();
+
+            //throw new NotImplementedException();
         }
 
         public override string ToString()

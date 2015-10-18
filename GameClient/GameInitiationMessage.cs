@@ -12,7 +12,8 @@ namespace GameClient.Messages
 
         public override void Execute()
         {
-            GameWorld.Instance.map = mapDetails;
+            GameWorld.Instance.Map = mapDetails;
+            GameWorld.Instance.State = GameWorld.GameWorldState.Running;
         }
 
         public override string ToString()

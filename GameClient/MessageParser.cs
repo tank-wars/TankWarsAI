@@ -33,6 +33,7 @@ namespace GameClient
             rootNode.NextNode.NextNode.NextNode.NextNode = new ParserNode(Messages.GlobalUpdateMessage.GlobalUpdateMessageParser.Instance);
             rootNode.NextNode.NextNode.NextNode.NextNode.NextNode = new ParserNode(Messages.CoinsAvailableMessage.CoinAvailbleMessageParser.Instance);
             rootNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode = new ParserNode(Messages.LifePackAvailableMessage.LifePackAvailbleMessageParser.Instance);
+            rootNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode.NextNode = new ParserNode(Messages.GameFinishedMessage.GameFinishedMessageParser.Instance);
         }
 
         public static bool ValidateMessageFooter(String message)

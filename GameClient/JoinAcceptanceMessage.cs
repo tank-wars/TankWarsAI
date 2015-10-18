@@ -29,7 +29,7 @@ namespace GameClient.Messages
         
         public override void Execute()
         {
-            GameWorld.Instance.players = playerDetails;
+            GameWorld.Instance.Players = playerDetails;
         }
 
         public override string ToString()

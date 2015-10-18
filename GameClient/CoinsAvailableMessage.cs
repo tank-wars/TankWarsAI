@@ -12,7 +12,7 @@ namespace GameClient.Messages
 
         public override void Execute()
         {
-            GameWorld.Instance.coins.Add(coin);
+            GameWorld.Instance.Coins.Add(coin);
         }
 
         public override string ToString()

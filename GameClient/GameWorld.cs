@@ -9,19 +9,37 @@ namespace GameClient
 {
     class GameWorld
     {
-        public bool isGameRunning { get; set; }
         
-        public MapDetails map { get; set; }
+        public GameWorldState State { get { return state; } set { state = value; } }
+        
+        public MapDetails Map { get; set; }
 
-        public PlayerDetails[] players { get; set; }
+        public PlayerDetails[] Players { get; set; }
 
-        public Brick[] brickState { get; set; }
+        public Brick[] BrickState { get; set; }
 
-        public ArrayList coins = new ArrayList();
 
-        public ArrayList lifePack = new ArrayList();
+        private ArrayList coins = new ArrayList();
+
+        private ArrayList lifePacks = new ArrayList();
 
         private static GameWorld instance = null;
+
+        private GameWorldState state = GameWorldState.NotStarted;
+
+        public ArrayList Coins
+        {
+            get
+            {
+                return coins;
+            }
+            set { coins = value; }
+        }
+        public ArrayList LifePacks
+        {
+            get { return lifePacks;  }
+            set { lifePacks = value; }
+        }
 
         private GameWorld()
         {
@@ -42,18 +60,21 @@ namespace GameClient
         {
             StringBuilder builder = new StringBuilder();
             builder.AppendLine("\nGame World Details ---------------------------------\n");
-            if (map != null)
-                builder.AppendLine("Map: " + map.ToString());
-            if (players != null)
+            builder.AppendLine("State: " + State.ToString());
+            builder.AppendLine(" ");
+
+            if (Map != null)
+                builder.AppendLine("Map: " + Map.ToString());
+            if (Players != null)
             {
                 builder.AppendLine("Players: ");
-                foreach (PlayerDetails player in players)
+                foreach (PlayerDetails player in Players)
                     builder.AppendLine(player.ToString());
             }
-            if (brickState != null && brickState.Length>0)
+            if (BrickState != null && BrickState.Length>0)
             {
                 builder.AppendLine("Bricks:");
-                foreach (Brick brick in brickState)
+                foreach (Brick brick in BrickState)
                     builder.Append(brick.ToString());
             }
             builder.AppendLine(" ");
@@ -64,14 +85,20 @@ namespace GameClient
                     builder.Append(coin.ToString());
             }
             builder.AppendLine(" ");
-            if (lifePack != null && lifePack.Count>0)
+            if (lifePacks != null && lifePacks.Count>0)
             {
                 builder.AppendLine("Life pack:");
-                foreach (LifePack lifePack in lifePack)
+                foreach (LifePack lifePack in lifePacks)
                     builder.Append(lifePack.ToString());
             }
             builder.AppendLine(" ");
+ 
             return builder.ToString();
+        }
+
+        public enum GameWorldState
+        {
+            NotStarted, Running, Finished
         }
 
     }

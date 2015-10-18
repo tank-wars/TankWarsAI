@@ -240,11 +240,12 @@
             this.pnlMapGUI.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlMapGUI_Paint);
             this.pnlMapGUI.Resize += new System.EventHandler(this.pnlMapGUI_Resize);
             // 
-            // checkBox1
+            // chkEchoGameWorld
             // 
+            this.chkEchoGameWorld.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkEchoGameWorld.AutoSize = true;
             this.chkEchoGameWorld.Location = new System.Drawing.Point(14, 404);
-            this.chkEchoGameWorld.Name = "checkBox1";
+            this.chkEchoGameWorld.Name = "chkEchoGameWorld";
             this.chkEchoGameWorld.Size = new System.Drawing.Size(128, 17);
             this.chkEchoGameWorld.TabIndex = 18;
             this.chkEchoGameWorld.Text = "Game World Updates";

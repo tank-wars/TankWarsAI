@@ -14,13 +14,13 @@ namespace GameClient
 
         public Coordinate Position { get; set; }
 
-        public int isShot { get; set; }
+        public int IsShot { get; set; }
 
-        public int health { get; set; }
+        public int Health { get; set; }
 
-        public int coins { get; set; }
+        public int Coins { get; set; }
 
-        public int points { get; set; }
+        public int Points { get; set; }
 
         public override string ToString()
         {
@@ -28,10 +28,10 @@ namespace GameClient
             builder.AppendLine("Player: " + Name);
             builder.AppendLine("-Position: " + Position.ToString());
             builder.AppendLine("-Direction: " + Direction.ToString());
-            builder.AppendLine("-isShot: " + isShot);
-            builder.AppendLine("-health: " + health);
-            builder.AppendLine("-coins: " + coins);
-            builder.AppendLine("-points: " + points);
+            builder.AppendLine("-isShot: " + IsShot);
+            builder.AppendLine("-health: " + Health);
+            builder.AppendLine("-coins: " + Coins);
+            builder.AppendLine("-points: " + Points);
             return builder.ToString();
         }
     }

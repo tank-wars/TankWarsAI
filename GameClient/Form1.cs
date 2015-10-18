@@ -96,6 +96,7 @@ namespace GameClient
             {
                 EchoParsed(message.ToString());
                 message.Execute();
+                pnlMapGUI.Invalidate();
             }
             else
             {
@@ -228,10 +229,20 @@ namespace GameClient
             e.Graphics.Clear(Color.White);
             DemoGUI gui = new DemoGUI(graphics, new Point(), Math.Min(pnlMapGUI.Width, pnlMapGUI.Height));
             gui.DrawGrid();
-            gui.DrawTank(0, new Coordinate(2, 2), Direction.North);
+
+            GameWorld world = GameWorld.Instance;
+            
+            if(world.Players != null)
+                foreach(PlayerDetails player in world.Players)
+                {
+                    int index = Convert.ToInt32(player.Name.Substring(1));
+                    gui.DrawTank(index, player.Position, player.Direction);
+                }
+
+            /*gui.DrawTank(0, new Coordinate(2, 2), Direction.North);
             gui.DrawTank(1, new Coordinate(5, 2), Direction.East);
             gui.DrawTank(2, new Coordinate(2, 5), Direction.South);
-            gui.DrawTank(3, new Coordinate(3, 3), Direction.West);
+            gui.DrawTank(3, new Coordinate(3, 3), Direction.West);*/
         }
 
         private void pnlMapGUI_Resize(object sender, EventArgs e)

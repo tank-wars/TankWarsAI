@@ -12,8 +12,8 @@ namespace GameClient.Messages
 
         public override void Execute()
         {
-            GameWorld.Instance.brickState = globalUpdate.brickUpdate;
-            GameWorld.Instance.players = globalUpdate.PlayerUpdates;
+            GameWorld.Instance.BrickState = globalUpdate.brickUpdate;
+            GameWorld.Instance.Players = globalUpdate.PlayerUpdates;
         }
 
         public override string ToString()
@@ -60,10 +60,10 @@ namespace GameClient.Messages
                         player.Name = parameters[0];
                         player.Position = Tokenizer.TokernizeCoordinates(parameters[1]);
                         player.Direction = (Direction)Convert.ToInt32(parameters[2]);
-                        player.isShot = Convert.ToInt32(parameters[3]);
-                        player.health = Convert.ToInt32(parameters[4]);
-                        player.coins = Convert.ToInt32(parameters[5]);
-                        player.points = Convert.ToInt32(parameters[6]);
+                        player.IsShot = Convert.ToInt32(parameters[3]);
+                        player.Health = Convert.ToInt32(parameters[4]);
+                        player.Coins = Convert.ToInt32(parameters[5]);
+                        player.Points = Convert.ToInt32(parameters[6]);
                         playerUpdate[i-1] = player;
                     }
 
