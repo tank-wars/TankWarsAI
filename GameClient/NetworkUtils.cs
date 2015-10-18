@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -25,9 +26,13 @@ namespace GameClient
                 }
                 catch(IOException ex)
                 {
-
+                    Debug.WriteLine("Close Safely Failed: " + ex.Message);
                 }
-                
+                catch (SocketException ex)
+                {
+                    Debug.WriteLine("Close Safely Failed: " + ex.Message);
+                }
+
             }
         }
         public static void CloseSafely(Stream stream)
@@ -40,7 +45,11 @@ namespace GameClient
                 }
                 catch (IOException ex)
                 {
-
+                    Debug.WriteLine("Close Safely Failed: " + ex.Message);
+                }
+                catch (SocketException ex)
+                {
+                    Debug.WriteLine("Close Safely Failed: " + ex.Message);
                 }
 
             }
@@ -56,7 +65,11 @@ namespace GameClient
                 }
                 catch (IOException ex)
                 {
-
+                    Debug.WriteLine("Close Safely Failed: " + ex.Message);
+                }
+                catch (SocketException ex)
+                {
+                    Debug.WriteLine("Close Safely Failed: " + ex.Message);
                 }
 
             }
@@ -71,7 +84,11 @@ namespace GameClient
                 }
                 catch (IOException ex)
                 {
-
+                    Debug.WriteLine("Close Safely Failed: " + ex.Message);
+                }
+                catch (SocketException ex)
+                {
+                    Debug.WriteLine("Close Safely Failed: " + ex.Message);
                 }
 
             }
