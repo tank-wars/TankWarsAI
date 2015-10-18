@@ -14,7 +14,7 @@ namespace GameClient
 
         public Coordinate Position { get; set; }
 
-        public int IsShot { get; set; }
+        public bool IsShooting { get; set; }
 
         public int Health { get; set; }
 
@@ -28,7 +28,7 @@ namespace GameClient
             builder.AppendLine("Player: " + Name);
             builder.AppendLine("-Position: " + Position.ToString());
             builder.AppendLine("-Direction: " + Direction.ToString());
-            builder.AppendLine("-isShot: " + IsShot);
+            builder.AppendLine("-isShot: " + IsShooting);
             builder.AppendLine("-health: " + Health);
             builder.AppendLine("-coins: " + Coins);
             builder.AppendLine("-points: " + Points);

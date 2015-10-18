@@ -203,6 +203,8 @@
             // 
             // txtHost
             // 
+            this.txtHost.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtHost.Location = new System.Drawing.Point(48, 9);
             this.txtHost.Name = "txtHost";
             this.txtHost.Size = new System.Drawing.Size(395, 20);
@@ -220,6 +222,7 @@
             // 
             // btnConnect
             // 
+            this.btnConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnConnect.Location = new System.Drawing.Point(452, 8);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(75, 23);
@@ -269,6 +272,7 @@
             this.Controls.Add(this.chkEchoConsole);
             this.Controls.Add(this.btnSendRAW);
             this.Controls.Add(this.txtSend);
+            this.DoubleBuffered = true;
             this.Name = "frmDemoParser";
             this.Text = "Parser Demo";
             this.Load += new System.EventHandler(this.Form1_Load);

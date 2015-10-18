@@ -23,7 +23,7 @@ namespace GameClient
 
             foreach(Brick brick in brickUpdate)
             {
-                builder.AppendLine(brick.postition.ToString() + "\tDamage level: " + brick.damageLevel);
+                builder.AppendLine(brick.Postition.ToString() + "\tDamage level: " + brick.DamageLevel);
             }
             return builder.ToString();
         }

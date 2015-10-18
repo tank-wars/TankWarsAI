@@ -8,14 +8,14 @@ namespace GameClient
 {
     class Brick
     {
-        public Coordinate postition { get; set; }
+        public Coordinate Postition { get; set; }
 
-        public int damageLevel { get; set; }
+        public int DamageLevel { get; set; }
 
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine("Brick position: " + postition.ToString() + "\tDamage Level: " + damageLevel);
+            builder.AppendLine("Brick position: " + Postition.ToString() + "\tDamage Level: " + DamageLevel);
             return builder.ToString();
         }
 

@@ -45,7 +45,7 @@ namespace GameClient.Messages
                 {
                     //C:<x>,<y>:<LT>:<Val>#
                     LifePack lifePack = new LifePack();
-                    lifePack.position = Tokenizer.TokernizeCoordinates(sections[1]);
+                    lifePack.Position = Tokenizer.TokernizeCoordinates(sections[1]);
                     lifePack.TimeLimit = Convert.ToInt32(sections[2]);
 
                     LifePackAvailableMessage result = new LifePackAvailableMessage();

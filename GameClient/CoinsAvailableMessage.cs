@@ -45,7 +45,7 @@ namespace GameClient.Messages
                 {
                     //C:<x>,<y>:<LT>:<Val>#
                     Coin coin = new Coin();
-                    coin.position = Tokenizer.TokernizeCoordinates(sections[1]);
+                    coin.Position = Tokenizer.TokernizeCoordinates(sections[1]);
                     coin.TimeLimit = Convert.ToInt32(sections[2]);
                     coin.Value = Convert.ToInt32(sections[3]);
 

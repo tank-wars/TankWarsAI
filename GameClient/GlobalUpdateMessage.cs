@@ -60,7 +60,8 @@ namespace GameClient.Messages
                         player.Name = parameters[0];
                         player.Position = Tokenizer.TokernizeCoordinates(parameters[1]);
                         player.Direction = (Direction)Convert.ToInt32(parameters[2]);
-                        player.IsShot = Convert.ToInt32(parameters[3]);
+                        int shot = Convert.ToInt32(parameters[3]);
+                        player.IsShooting = shot == 1;
                         player.Health = Convert.ToInt32(parameters[4]);
                         player.Coins = Convert.ToInt32(parameters[5]);
                         player.Points = Convert.ToInt32(parameters[6]);
@@ -73,8 +74,8 @@ namespace GameClient.Messages
                     {
                         Brick brick = new Brick();
                         int[] brickDamage= Tokenizer.TokernizeBrickDamage(paras[i]);
-                        brick.postition = new Coordinate(brickDamage[0], brickDamage[1]);
-                        brick.damageLevel = brickDamage[2];
+                        brick.Postition = new Coordinate(brickDamage[0], brickDamage[1]);
+                        brick.DamageLevel = brickDamage[2];
                         brickUpdate[i] = brick;
                     }
 

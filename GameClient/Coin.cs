@@ -8,7 +8,7 @@ namespace GameClient
 {
     class Coin
     {
-        public Coordinate position { get; set; }
+        public Coordinate Position { get; set; }
 
         public int TimeLimit { get; set; }
 
@@ -17,7 +17,7 @@ namespace GameClient
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine("Coin position: " + position.ToString() + "\tTimeLimit: " + TimeLimit + "\tValue: " + Value);
+            builder.AppendLine("Coin position: " + Position.ToString() + "\tTimeLimit: " + TimeLimit + "\tValue: " + Value);
             return builder.ToString();
         }
     }

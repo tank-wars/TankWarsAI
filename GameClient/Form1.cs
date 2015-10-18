@@ -20,7 +20,7 @@ namespace GameClient
 
         private void Form1_Load(object sender, EventArgs e)
         {
-                        
+            Console.Title = "TankGame Parser Outputs";               
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -232,11 +232,55 @@ namespace GameClient
 
             GameWorld world = GameWorld.Instance;
             
-            if(world.Players != null)
-                foreach(PlayerDetails player in world.Players)
+            
+            if(world.Map != null)
+            {
+                if (world.Map.Water != null)
+                {
+                    foreach (Coordinate water in world.Map.Water)
+                    {
+                        gui.DrawWater(water);
+                    }
+                }
+                if(world.BrickState != null)
+                {
+                    foreach (Brick brick in world.BrickState)
+                    {
+                        gui.DrawBrick(brick.Postition, brick.DamageLevel);
+                    }
+                }
+                else if(world.Map.Brick != null)
+                {                    
+                    foreach (Coordinate brick in world.Map.Brick)
+                    {
+                        gui.DrawBrick(brick,0);
+                    }
+                }
+                if (world.Map.Stone != null)
+                {
+                    foreach (Coordinate stone in world.Map.Stone)
+                    {
+                        gui.DrawStone(stone);
+                    }
+                }
+            }
+            if(world.LifePacks != null)
+                foreach(LifePack lifePack in world.LifePacks)
+                {
+                    gui.DrawMedi(lifePack.Position);
+                }
+
+            if (world.Coins != null)
+                foreach (Coin coin in world.Coins)
+                {
+                    gui.DrawCoin(coin.Position);
+                }
+
+            if (world.Players != null)
+                foreach (PlayerDetails player in world.Players)
                 {
                     int index = Convert.ToInt32(player.Name.Substring(1));
-                    gui.DrawTank(index, player.Position, player.Direction);
+                    gui.DrawTank(index, player.Position, player.Direction, player.IsShooting);
                 }
 
             /*gui.DrawTank(0, new Coordinate(2, 2), Direction.North);

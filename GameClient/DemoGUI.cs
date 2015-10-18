@@ -26,6 +26,14 @@ namespace GameClient
             }
         }
 
+        private Brush BulletBrush
+        {
+            get
+            {
+                return Brushes.Gold;
+            }
+
+        }
         private Brush[] TankBrushes
         {
             get
@@ -35,6 +43,47 @@ namespace GameClient
             }
         }
 
+        private Brush WaterBrush
+        {
+            get
+            {
+                return Brushes.CornflowerBlue;
+            }
+        }
+        private Brush BrickBrush
+        {
+            get
+            {
+                return Brushes.SaddleBrown;
+            }
+        }
+
+        private Brush CoinBrush
+        {
+            get { return Brushes.Yellow; }
+        }
+
+        private Brush MediBrush
+        {
+            get { return Brushes.Red; }
+        }
+
+        private Brush StoneBrush
+        {
+            get
+            {
+                return Brushes.Silver;
+            }
+        }
+        private GraphicsPath BulletShape
+        {
+            get
+            {
+                GraphicsPath shape = new GraphicsPath();
+                shape.AddEllipse(-0.125f, -0.625f, 0.25f, 0.25f);
+                return shape;
+            }
+        }
         private GraphicsPath TankShape
         {
             get
@@ -116,7 +165,84 @@ namespace GameClient
             throw new Exception("Unidentified Direction");
         }
 
-        public void DrawTank(int colorIndex, Coordinate location, Direction heading)
+        private void FillCell(Coordinate location, Brush brush, int health)
+        {
+            
+            //obtain shape
+            GraphicsPath shape = new GraphicsPath();
+            switch (health)
+            {
+                case 0:
+                    shape.AddRectangle(new RectangleF(-0.5f, -0.5f, 1, 1));
+                    break;
+                case 1:
+                    shape.AddRectangle(new RectangleF(-0.5f, -0.25f, 1, 0.75f));
+                    break;
+                case 2:
+                    shape.AddRectangle(new RectangleF(-0.5f, 0, 1, 0.5f));
+                    break;
+                case 3:
+                    shape.AddRectangle(new RectangleF(-0.5f, 0.25f, 1, 0.25f));
+                    break;
+               
+            }
+            
+
+            Matrix shapeTransform = new Matrix();
+            //obtain location
+            Point loc = getCellCenter(location.Y, location.X);
+
+            //transform the shape 
+            shapeTransform.Translate(loc.X, loc.Y);
+            shapeTransform.Scale(CellSize.Width, CellSize.Height);
+
+
+            shape.Transform(shapeTransform);
+            //fill the cell
+            graphics.FillPath(brush, shape);
+        }
+
+        private void FillCell(Coordinate location, Brush brush)
+        {
+            FillCell(location, brush, 0);
+        }
+        public void DrawCoin(Coordinate location)
+        {
+            Brush brush = CoinBrush;
+
+            FillCell(location, brush);
+
+        }
+
+        public void DrawMedi(Coordinate location)
+        {
+            Brush brush = MediBrush;
+
+            FillCell(location, brush);
+
+        }
+
+        public void DrawBrick(Coordinate location, int health)
+        {
+            Brush brush = BrickBrush;
+            FillCell(location, brush,health);
+
+        }
+        public void DrawStone(Coordinate location)
+        {
+            Brush brush = StoneBrush;
+            FillCell(location, brush);
+
+        }
+
+        public void DrawWater(Coordinate location)
+        {
+            Brush brush = WaterBrush;
+            FillCell(location, brush);
+
+        }
+
+        public void DrawTank(int colorIndex, Coordinate location, Direction heading, bool isShooting)
         {
             //obtain brush
             Brush[] tankBrushes = TankBrushes;
@@ -141,7 +267,15 @@ namespace GameClient
             //Draw the tank
             graphics.FillPath(brush, shape);
 
+            if(isShooting)
+            {
+                GraphicsPath bullet = BulletShape;
+                bullet.Transform(shapeTransform);
+                graphics.FillPath(BulletBrush, bullet);
+            }
+
         }
 
+       
     }
 }

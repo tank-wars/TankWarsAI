@@ -8,14 +8,14 @@ namespace GameClient
 {
     class LifePack
     {
-        public Coordinate position { get; set; }
+        public Coordinate Position { get; set; }
 
         public int TimeLimit { get; set; }
 
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine("LifePack position: " + position.ToString() + "\tTimeLimit: " + TimeLimit);
+            builder.AppendLine("LifePack position: " + Position.ToString() + "\tTimeLimit: " + TimeLimit);
             return builder.ToString();
         }
     }
