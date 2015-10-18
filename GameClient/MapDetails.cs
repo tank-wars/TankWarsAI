@@ -17,7 +17,7 @@ namespace GameClient
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine("Bricks: " + Coordinate.coordinateArrayToString(Brick));
+            builder.AppendLine("Bricks: " +Coordinate.coordinateArrayToString(Brick));
             builder.AppendLine("Stones " + Coordinate.coordinateArrayToString(Stone));
             builder.AppendLine("Water: " + Coordinate.coordinateArrayToString(Water));
             return builder.ToString();

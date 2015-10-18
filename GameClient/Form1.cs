@@ -20,9 +20,7 @@ namespace GameClient
 
         private void Form1_Load(object sender, EventArgs e)
         {
-         
-
-            
+                        
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
@@ -46,7 +44,6 @@ namespace GameClient
         private void Instance_MessageReceiveError(object Sender, Communicator.MessageReceiveErrorEventArgs args)
         {
             MessageBox.Show("Unable to instalize receiver..." + Environment.NewLine + args.Error.ToString(), "Error");
-
         }
 
         /*
@@ -93,7 +90,10 @@ namespace GameClient
             MessageParser parser = MessageParser.Instance;
             Messages.ServerMessage message = parser.Parse(args.Message);
             if (message != null)
+            {
                 EchoParsed(message.ToString());
+                message.Execute();
+            }
             else
             {
                 MessageBox.Show("Unidentified Message " + args.Message);

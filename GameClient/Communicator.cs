@@ -24,11 +24,8 @@ namespace GameClient
         
         private Communicator()
         {
-            
-            
-        }
 
-    
+        }    
         
         //set to true after instalized has been called
         private bool instalized = false;
@@ -47,7 +44,6 @@ namespace GameClient
         private static Communicator mInstance = null;
         public static Communicator Instance
         {
-           
             get
             {
                 if (mInstance == null)
@@ -64,8 +60,7 @@ namespace GameClient
                     throw new Exception("Not Instalized");
                 return receiver.IsListening; }
         }
-            
-
+        
         //Manually start receiving messages
         public void StartMessageReceiver()
         {
@@ -84,7 +79,6 @@ namespace GameClient
                 throw new Exception("Not Instalized");
             if (this.receiver.IsListening)
                 this.receiver.StopListener();
-            
         }
 
         //Call first before using other methods. Setup the configuration and start listener.
@@ -94,7 +88,6 @@ namespace GameClient
             this.receiver = new Receiver(configuration);
             this.receiver.StartListener();
             instalized = true;
-            
         }
 
         //sends a message to server. May throw network related exceptions
@@ -318,6 +311,7 @@ namespace GameClient
                 mServerHost = ServerHost;
                 mServerPort = ServerPort;
             }
+
             /*
                 Port used to connect to server
             */

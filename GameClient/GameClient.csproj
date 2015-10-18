@@ -58,6 +58,7 @@
     <Compile Include="DemoGUI.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="GameInitiationMessage.cs" />
+    <Compile Include="GameWorld.cs" />
     <Compile Include="GlobalUpdate.cs" />
     <Compile Include="GlobalUpdateMessage.cs" />
     <Compile Include="JoinAcceptanceMessage.cs" />

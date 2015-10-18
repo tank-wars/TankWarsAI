@@ -12,7 +12,8 @@ namespace GameClient.Messages
 
         public override void Execute()
         {
-            throw new NotImplementedException();
+            GameWorld.Instance.brickState = globalUpdate.brickUpdate;
+            GameWorld.Instance.players = globalUpdate.PlayerUpdates;
         }
 
         public override string ToString()
