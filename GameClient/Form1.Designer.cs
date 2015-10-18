@@ -45,6 +45,7 @@
             this.lblHost = new System.Windows.Forms.Label();
             this.btnConnect = new System.Windows.Forms.Button();
             this.pnlMapGUI = new System.Windows.Forms.Panel();
+            this.chkEchoGameWorld = new System.Windows.Forms.CheckBox();
             this.pnlControl.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,7 +53,7 @@
             // 
             this.txtSend.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSend.Location = new System.Drawing.Point(12, 389);
+            this.txtSend.Location = new System.Drawing.Point(12, 431);
             this.txtSend.Name = "txtSend";
             this.txtSend.Size = new System.Drawing.Size(431, 20);
             this.txtSend.TabIndex = 0;
@@ -61,7 +62,7 @@
             // 
             this.btnSendRAW.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSendRAW.Enabled = false;
-            this.btnSendRAW.Location = new System.Drawing.Point(449, 389);
+            this.btnSendRAW.Location = new System.Drawing.Point(449, 431);
             this.btnSendRAW.Name = "btnSendRAW";
             this.btnSendRAW.Size = new System.Drawing.Size(75, 23);
             this.btnSendRAW.TabIndex = 1;
@@ -141,18 +142,19 @@
             this.chkEchoConsole.AutoSize = true;
             this.chkEchoConsole.Checked = true;
             this.chkEchoConsole.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkEchoConsole.Location = new System.Drawing.Point(12, 366);
+            this.chkEchoConsole.Location = new System.Drawing.Point(14, 381);
             this.chkEchoConsole.Name = "chkEchoConsole";
             this.chkEchoConsole.Size = new System.Drawing.Size(104, 17);
             this.chkEchoConsole.TabIndex = 9;
             this.chkEchoConsole.Text = "Echo to Console";
             this.chkEchoConsole.UseVisualStyleBackColor = true;
+            this.chkEchoConsole.CheckedChanged += new System.EventHandler(this.chkEchoConsole_CheckedChanged);
             // 
             // chkEchoRaw
             // 
             this.chkEchoRaw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkEchoRaw.AutoSize = true;
-            this.chkEchoRaw.Location = new System.Drawing.Point(247, 366);
+            this.chkEchoRaw.Location = new System.Drawing.Point(249, 381);
             this.chkEchoRaw.Name = "chkEchoRaw";
             this.chkEchoRaw.Size = new System.Drawing.Size(127, 17);
             this.chkEchoRaw.TabIndex = 10;
@@ -163,7 +165,7 @@
             // 
             this.chkEchoSent.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkEchoSent.AutoSize = true;
-            this.chkEchoSent.Location = new System.Drawing.Point(373, 366);
+            this.chkEchoSent.Location = new System.Drawing.Point(375, 381);
             this.chkEchoSent.Name = "chkEchoSent";
             this.chkEchoSent.Size = new System.Drawing.Size(127, 17);
             this.chkEchoSent.TabIndex = 11;
@@ -176,12 +178,13 @@
             this.chkEchoParsed.AutoSize = true;
             this.chkEchoParsed.Checked = true;
             this.chkEchoParsed.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkEchoParsed.Location = new System.Drawing.Point(122, 366);
+            this.chkEchoParsed.Location = new System.Drawing.Point(124, 381);
             this.chkEchoParsed.Name = "chkEchoParsed";
             this.chkEchoParsed.Size = new System.Drawing.Size(119, 17);
             this.chkEchoParsed.TabIndex = 12;
             this.chkEchoParsed.Text = "Echo Parser Output";
             this.chkEchoParsed.UseVisualStyleBackColor = true;
+            this.chkEchoParsed.CheckedChanged += new System.EventHandler(this.chkEchoParsed_CheckedChanged);
             // 
             // pnlControl
             // 
@@ -232,16 +235,28 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlMapGUI.Location = new System.Drawing.Point(16, 35);
             this.pnlMapGUI.Name = "pnlMapGUI";
-            this.pnlMapGUI.Size = new System.Drawing.Size(427, 325);
+            this.pnlMapGUI.Size = new System.Drawing.Size(427, 331);
             this.pnlMapGUI.TabIndex = 17;
             this.pnlMapGUI.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlMapGUI_Paint);
             this.pnlMapGUI.Resize += new System.EventHandler(this.pnlMapGUI_Resize);
+            // 
+            // checkBox1
+            // 
+            this.chkEchoGameWorld.AutoSize = true;
+            this.chkEchoGameWorld.Location = new System.Drawing.Point(14, 404);
+            this.chkEchoGameWorld.Name = "checkBox1";
+            this.chkEchoGameWorld.Size = new System.Drawing.Size(128, 17);
+            this.chkEchoGameWorld.TabIndex = 18;
+            this.chkEchoGameWorld.Text = "Game World Updates";
+            this.chkEchoGameWorld.UseVisualStyleBackColor = true;
+            this.chkEchoGameWorld.CheckedChanged += new System.EventHandler(this.chkEchoGameWorld_CheckedChanged);
             // 
             // frmDemoParser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(536, 421);
+            this.ClientSize = new System.Drawing.Size(536, 463);
+            this.Controls.Add(this.chkEchoGameWorld);
             this.Controls.Add(this.pnlMapGUI);
             this.Controls.Add(this.btnConnect);
             this.Controls.Add(this.lblHost);
@@ -281,6 +296,7 @@
         private System.Windows.Forms.Label lblHost;
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Panel pnlMapGUI;
+        private System.Windows.Forms.CheckBox chkEchoGameWorld;
     }
 }
 

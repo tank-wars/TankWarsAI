@@ -38,5 +38,41 @@ namespace GameClient
             }
         }
 
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("\nGame World Details ---------------------------------\n");
+            if (map != null)
+                builder.AppendLine("Map: " + map.ToString());
+            if (players != null)
+            {
+                builder.AppendLine("Players: ");
+                foreach (PlayerDetails player in players)
+                    builder.AppendLine(player.ToString());
+            }
+            if (brickState != null && brickState.Length>0)
+            {
+                builder.AppendLine("Bricks:");
+                foreach (Brick brick in brickState)
+                    builder.Append(brick.ToString());
+            }
+            builder.AppendLine(" ");
+            if (coins != null && coins.Count>0)
+            {
+                builder.AppendLine("Coins:");
+                foreach (Coin coin in coins)
+                    builder.Append(coin.ToString());
+            }
+            builder.AppendLine(" ");
+            if (lifePack != null && lifePack.Count>0)
+            {
+                builder.AppendLine("Life pack:");
+                foreach (LifePack lifePack in lifePack)
+                    builder.Append(lifePack.ToString());
+            }
+            builder.AppendLine(" ");
+            return builder.ToString();
+        }
+
     }
 }

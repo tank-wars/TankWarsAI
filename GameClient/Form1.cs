@@ -86,6 +86,9 @@ namespace GameClient
         {
             if (chkEchoRaw.Checked)
                 EchoRaw(args.Message);
+
+            if (chkEchoGameWorld.Checked)
+                Echo(GameWorld.Instance.ToString());
             //txtReceived.AppendText(args.Message + Environment.NewLine);
             MessageParser parser = MessageParser.Instance;
             Messages.ServerMessage message = parser.Parse(args.Message);
@@ -234,7 +237,21 @@ namespace GameClient
         private void pnlMapGUI_Resize(object sender, EventArgs e)
         {
             pnlMapGUI.Invalidate();
-            
+        }
+
+        private void chkEchoGameWorld_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chkEchoConsole_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chkEchoParsed_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
