@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameClient
 {
-    enum Direction
+    public enum Direction
     {
         North = 0,
         East = 1,

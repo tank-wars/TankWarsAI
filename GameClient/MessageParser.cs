@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameClient
 {
-    class MessageParser
+    public class MessageParser
     {
         private ParserNode rootNode;
         private static MessageParser mInstance = null;

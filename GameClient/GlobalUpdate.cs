@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameClient
 {
-    class GlobalUpdate
+    public class GlobalUpdate
     {
         public PlayerDetails[] PlayerUpdates { get; set; }
 

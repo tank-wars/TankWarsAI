@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameClient.Messages
 {
-    class GameInitiationMessage : ServerMessage
+    public class GameInitiationMessage : ServerMessage
     {
         public MapDetails mapDetails { get; set; }
 

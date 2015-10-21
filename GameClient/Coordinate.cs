@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameClient
 {
-    struct Coordinate
+    public struct Coordinate
     {
         private int x;
         private int y;

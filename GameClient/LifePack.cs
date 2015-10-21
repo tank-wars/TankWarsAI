@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameClient
 {
-    class LifePack
+    public class LifePack
     {
         public Coordinate Position { get; set; }
 

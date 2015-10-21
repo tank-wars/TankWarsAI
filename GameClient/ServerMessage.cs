@@ -10,7 +10,7 @@ namespace GameClient.Messages
         The parent type of the object returned by a specialization of ServerMessageParser
         A parsed message sent from the Server
     */
-    abstract class ServerMessage
+    public abstract class ServerMessage
     {
         public abstract void Execute();
         public abstract override string ToString();

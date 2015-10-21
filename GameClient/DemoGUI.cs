@@ -39,7 +39,6 @@ namespace GameClient
             get
             {
                 return new Brush[] { Brushes.Red, Brushes.Blue, Brushes.Green, Brushes.Orange, Brushes.Yellow, Brushes.Purple };
-
             }
         }
 
