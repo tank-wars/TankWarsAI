@@ -8,15 +8,21 @@ using GameClient.Foundation;
 
 namespace GameClient.Network.Messages
 {
+    /*
+   Message sent from server to client, informing availavility of a new LifePack
+   */
     public class LifePackAvailableMessage : ServerMessage
     {
+        // Positon, time of availabilit and value of LifePack
         public LifePack lifePack { get; set; }
 
+        // Update GameWorld
         public override void Execute()
         {
             GameWorld.Instance.LifePacks.Add(lifePack);
         }
 
+        // Textual represnatation of variables for logging purpose
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
@@ -27,6 +33,9 @@ namespace GameClient.Network.Messages
             return builder.ToString();
         }
 
+        /*
+        The Praser to parse LifePackAvailableMessage
+        */
         public class LifePackAvailbleMessageParser : ServerMessage.ServerMessageParser
         {
             private static LifePackAvailbleMessageParser instance = null;

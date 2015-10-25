@@ -9,16 +9,22 @@ using GameClient.GameDomain;
 
 namespace GameClient.Network.Messages
 {
+    /*
+    Message sent from server to client, informing availavility of a new Coin
+    */
     public class CoinsAvailableMessage : ServerMessage
     {
+        // Positon, time of availabilit and value of Coin
         public Coin coin { get; set; }
 
+        // Update GameWorld
         public override void Execute()
         {
             
             GameWorld.Instance.Coins.Add(coin);
         }
 
+        // Textual represnatation of variables for logging purpose
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
@@ -29,6 +35,9 @@ namespace GameClient.Network.Messages
             return builder.ToString();
         }
 
+        /*
+        The Praser to parse CoinAvailableMessage
+        */
         public class CoinAvailbleMessageParser : ServerMessage.ServerMessageParser
         {
             private static CoinAvailbleMessageParser instance = null;
