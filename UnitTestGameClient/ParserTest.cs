@@ -2,6 +2,10 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using GameClient;
+using GameClient.GameDomain;
+using GameClient.Network;
+using GameClient.Foundation;
+using GameClient.Network.Messages;
 
 namespace UnitTestGameClient
 {
@@ -18,7 +22,7 @@ namespace UnitTestGameClient
             expectedOutput.Water = new Coordinate[] { new Coordinate(2, 4), new Coordinate(1, 6) };
 
             MessageParser messageParser = MessageParser.Instance;
-            GameClient.Messages.GameInitiationMessage serverMessage = (GameClient.Messages.GameInitiationMessage)messageParser.Parse(input);
+            GameInitiationMessage serverMessage = (GameInitiationMessage)messageParser.Parse(input);
             MapDetails output = serverMessage.mapDetails;
             
             Assert.AreEqual(expectedOutput.Brick[0], output.Brick[0]);

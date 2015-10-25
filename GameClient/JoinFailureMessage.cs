@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameClient.Messages
+namespace GameClient.Network.Messages
 {
     /*
         A join failure message is broadcasted in response to a join request, when the request fails

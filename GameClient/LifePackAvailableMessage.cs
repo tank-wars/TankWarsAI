@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameClient.GameDomain;
+using GameClient.Foundation;
 
-namespace GameClient.Messages
+namespace GameClient.Network.Messages
 {
     class LifePackAvailableMessage : ServerMessage
     {

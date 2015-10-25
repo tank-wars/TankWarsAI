@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameClient
+namespace GameClient.Network
 {
     //Support tool to safely close connections
     class NetworkUtils

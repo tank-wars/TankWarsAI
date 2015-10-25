@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameClient.Messages
+namespace GameClient.Network.Messages
 {
     /*
         The parent type of the object returned by a specialization of ServerMessageParser

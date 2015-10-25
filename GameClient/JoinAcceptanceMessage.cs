@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameClient.GameDomain;
+using GameClient.Foundation;
 
-namespace GameClient.Messages
+namespace GameClient.Network.Messages
 {
     /*
     Message sent from server to client, accepting the clients join request
@@ -68,13 +70,13 @@ namespace GameClient.Messages
                 if(sections[0].ToLower() == "s")
                 {
                     //S:P0;0,0;0#
-                    GameClient.PlayerDetails[] players = new GameClient.PlayerDetails[sections.Length - 1];
+                    PlayerDetails[] players = new PlayerDetails[sections.Length - 1];
                     //identify individual player details received
                     for(int i = 1; i < sections.Length; i++)
                     {
                         string section = sections[i];
                         string[] parameters = Tokenizer.TokernizeParameters(section);
-                        GameClient.PlayerDetails player = new GameClient.PlayerDetails();
+                        PlayerDetails player = new PlayerDetails();
                         player.Name = parameters[0];
                         player.Position = Tokenizer.TokernizeCoordinates(parameters[1]);
                         int direction = Convert.ToInt32(parameters[2]);

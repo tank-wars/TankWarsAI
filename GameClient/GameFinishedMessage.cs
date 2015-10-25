@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameClient.GameDomain;
 
-namespace GameClient.Messages
+namespace GameClient.Network.Messages
 {
     class GameFinishedMessage : ServerMessage
     {

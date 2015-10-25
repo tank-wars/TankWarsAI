@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameClient.Foundation;
+using GameClient.GameDomain;
 
-namespace GameClient.Messages
+
+namespace GameClient.Network.Messages
 {
     class CoinsAvailableMessage : ServerMessage
     {
@@ -12,6 +15,7 @@ namespace GameClient.Messages
 
         public override void Execute()
         {
+            
             GameWorld.Instance.Coins.Add(coin);
         }
 

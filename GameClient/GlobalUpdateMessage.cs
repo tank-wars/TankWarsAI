@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameClient.GameDomain;
+using GameClient.Foundation;
 
-namespace GameClient.Messages
+namespace GameClient.Network.Messages
 {
     class GlobalUpdateMessage : ServerMessage
     {
@@ -26,6 +28,30 @@ namespace GameClient.Messages
             builder.AppendLine("------------------------\n");
             return builder.ToString();
         }
+
+        public class GlobalUpdate
+        {
+            public PlayerDetails[] PlayerUpdates { get; set; }
+
+            public Brick[] brickUpdate { get; set; }
+
+            public override string ToString()
+            {
+                StringBuilder builder = new StringBuilder();
+                foreach (PlayerDetails player in PlayerUpdates)
+                {
+                    builder.AppendLine(" ");
+                    builder.AppendLine(player.ToString());
+                }
+
+                foreach (Brick brick in brickUpdate)
+                {
+                    builder.AppendLine(brick.Postition.ToString() + "\tDamage level: " + brick.DamageLevel);
+                }
+                return builder.ToString();
+            }
+        }
+
 
         public class GlobalUpdateMessageParser : ServerMessage.ServerMessageParser
         {

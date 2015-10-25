@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace GameClient
+using GameClient.Foundation;
+namespace GameClient.Network
 {
     class Tokenizer
     {
         private Tokenizer()
         {
-
+            
         }
         /*
             Sections are seperated by colon

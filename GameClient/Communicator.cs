@@ -12,7 +12,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 
-namespace GameClient
+namespace GameClient.Network.Communicator
 {
     /*
         Handles Communication with Game Server
@@ -101,8 +101,9 @@ namespace GameClient
             try
             {
                 ipAddress = IPAddress.Parse(configuration.ServerHost);
+                
             }
-            catch(FormatException ex)
+            catch(FormatException)
             {
                 //server host is not an ip address. it could be host. resolve
                 foreach (IPAddress add in ipHostInfo.AddressList)

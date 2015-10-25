@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameClient.Messages
+namespace GameClient.Network.Messages
 {
     /*
     A message to be sent from client to server

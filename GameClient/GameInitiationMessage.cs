@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameClient.GameDomain;
+using GameClient.Foundation;
 
-namespace GameClient.Messages
+namespace GameClient.Network.Messages
 {
     public class GameInitiationMessage : ServerMessage
     {
@@ -46,7 +48,7 @@ namespace GameClient.Messages
                 if (sections[0].ToLower() == "i")
                 {
                     //I:P<num>: <Brick x>,<Brick y>;<Brick x>,<Stone x>.<Stone y>;<Stone x>,<Stone y>:<Water x>.<Water y>;<Water x>,<Water y>#
-                    GameClient.MapDetails mapDetails = new GameClient.MapDetails();
+                    MapDetails mapDetails = new MapDetails();
                     
                     string section = sections[2];
                     string[] parameters = Tokenizer.TokernizeParameters(section);

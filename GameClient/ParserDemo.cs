@@ -8,6 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GameClient.GameDomain;
+using GameClient.Foundation;
+using GameClient.Network;
+using GameClient.Network.Communicator;
+using GameClient.Network.Messages;
+using GameClient.GUI;
 
 namespace GameClient
 {
@@ -91,7 +97,7 @@ namespace GameClient
                 Echo(GameWorld.Instance.ToString());
             //txtReceived.AppendText(args.Message + Environment.NewLine);
             MessageParser parser = MessageParser.Instance;
-            Messages.ServerMessage message = parser.Parse(args.Message);
+            ServerMessage message = parser.Parse(args.Message);
             if (message != null)
             {
                 EchoParsed(message.ToString());
@@ -114,7 +120,7 @@ namespace GameClient
         private void btnJoin_Click(object sender, EventArgs e)
         {
             try {
-                Messages.ClientMessage msg = new Messages.JoinRequestMessage();
+                ClientMessage msg = new JoinRequestMessage();
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
                 EchoSent(msg.GenerateStringMessage());
                 //txtReceived.AppendText(msg.ToString() + Environment.NewLine);
@@ -134,7 +140,7 @@ namespace GameClient
         private void btnNorth_Click(object sender, EventArgs e)
         {
             try {
-                Messages.ClientMessage msg = new Messages.PlayerMovementMessage(Direction.North);
+                ClientMessage msg = new PlayerMovementMessage(Direction.North);
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
                 EchoSent(msg.GenerateStringMessage());
                 //txtReceived.AppendText(msg.ToString() + Environment.NewLine);
@@ -152,7 +158,7 @@ namespace GameClient
         private void btnSouth_Click(object sender, EventArgs e)
         {
             try { 
-                Messages.ClientMessage msg = new Messages.PlayerMovementMessage(Direction.South);
+                ClientMessage msg = new PlayerMovementMessage(Direction.South);
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
                 EchoSent(msg.GenerateStringMessage());
                 //txtReceived.AppendText(msg.ToString() + Environment.NewLine);
@@ -171,7 +177,7 @@ namespace GameClient
         {
             try
             {
-                Messages.ClientMessage msg = new Messages.PlayerMovementMessage(Direction.West);
+                ClientMessage msg = new PlayerMovementMessage(Direction.West);
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
                 EchoSent(msg.GenerateStringMessage());
                 //txtReceived.AppendText(msg.ToString() + Environment.NewLine);
@@ -191,10 +197,10 @@ namespace GameClient
         private void btnEast_Click(object sender, EventArgs e)
         {
             try { 
-                Messages.ClientMessage msg = new Messages.PlayerMovementMessage(Direction.East);
+                ClientMessage msg = new PlayerMovementMessage(Direction.East);
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
                 EchoSent(msg.GenerateStringMessage());
-                //txtReceived.AppendText(msg.ToString() + Environment.NewLine);
+                
             }
             catch (System.IO.IOException)
             {
@@ -210,7 +216,7 @@ namespace GameClient
         {
             try
             {
-                Messages.ClientMessage msg = new Messages.ShootMessage();
+                ClientMessage msg = new ShootMessage();
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
                 EchoSent(msg.GenerateStringMessage());
                 //txtReceived.AppendText(msg.ToString() + Environment.NewLine);

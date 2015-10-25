@@ -5,8 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing.Drawing2D;
 using System.Drawing;
+using GameClient.Foundation;
+using GameClient.Network;
+using GameClient.Network.Communicator;
+using GameClient.GameDomain;
 
-namespace GameClient
+namespace GameClient.GUI
 {
     /*
     This is a temporary class written to demonstrate GUI at Evaluation

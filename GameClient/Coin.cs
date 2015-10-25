@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GameClient.Foundation;
 
-namespace GameClient
+namespace GameClient.GameDomain
 {
     public class Coin
     {

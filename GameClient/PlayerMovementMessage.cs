@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace GameClient.Messages
+using GameClient.Foundation;
+namespace GameClient.Network.Messages
 {
     /*
         A message from client to server requesting it to move our player
