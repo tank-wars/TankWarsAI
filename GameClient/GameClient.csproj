@@ -73,11 +73,11 @@
     <Compile Include="PlayerMovementMessage.cs" />
     <Compile Include="ServerMessage.cs" />
     <Compile Include="Communicator.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="ParserDemo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ParserDemo.Designer.cs">
+      <DependentUpon>ParserDemo.cs</DependentUpon>
     </Compile>
     <Compile Include="MessageParser.cs" />
     <Compile Include="NetworkUtils.cs" />
@@ -85,8 +85,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShootMessage.cs" />
     <Compile Include="Tokenizer.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="ParserDemo.resx">
+      <DependentUpon>ParserDemo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

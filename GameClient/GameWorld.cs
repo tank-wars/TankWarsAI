@@ -19,15 +19,30 @@ namespace GameClient
         public Brick[] BrickState { get; set; }
 
 
-        private ArrayList coins = new ArrayList();
+        private List<Coin> coins = new List<Coin>();
 
-        private ArrayList lifePacks = new ArrayList();
+        private List<LifePack> lifePacks = new List<LifePack>();
 
         private static GameWorld instance = null;
 
         private GameWorldState state = GameWorldState.NotStarted;
 
-        public ArrayList Coins
+        /*
+            Advance the gameworld to next frame
+        */
+        public void AdvanceFrame()
+        {
+            foreach(LifePack lifePack in lifePacks)
+            {
+                lifePack.AdvanceFrame();
+            }
+            foreach (Coin coin in coins)
+            {
+                coin.AdvanceFrame();
+            }
+        }
+
+        public List<Coin> Coins
         {
             get
             {
@@ -35,7 +50,7 @@ namespace GameClient
             }
             set { coins = value; }
         }
-        public ArrayList LifePacks
+        public List<LifePack> LifePacks
         {
             get { return lifePacks;  }
             set { lifePacks = value; }

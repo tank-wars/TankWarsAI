@@ -98,14 +98,24 @@ namespace GameClient
 
             IPHostEntry ipHostInfo = Dns.GetHostEntry(configuration.ServerHost);
             IPAddress ipAddress = null;
-            foreach (IPAddress add in ipHostInfo.AddressList)
+            try
             {
-                if (add.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    ipAddress = add;
-                }
-                
+                ipAddress = IPAddress.Parse(configuration.ServerHost);
             }
+            catch(FormatException ex)
+            {
+                //server host is not an ip address. it could be host. resolve
+                foreach (IPAddress add in ipHostInfo.AddressList)
+                {
+                    if (add.AddressFamily == AddressFamily.InterNetwork)
+                    {
+                        ipAddress = add;
+                    }
+
+                }
+            }
+           
+            
             IPEndPoint remoteEndPoint = new IPEndPoint(ipAddress, configuration.ServerPort);
             Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             sock.Connect(remoteEndPoint);

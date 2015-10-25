@@ -14,6 +14,7 @@ namespace GameClient.Messages
         {
             GameWorld.Instance.BrickState = globalUpdate.brickUpdate;
             GameWorld.Instance.Players = globalUpdate.PlayerUpdates;
+            GameWorld.Instance.AdvanceFrame();
         }
 
         public override string ToString()

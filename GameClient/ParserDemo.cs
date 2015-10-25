@@ -119,12 +119,14 @@ namespace GameClient
                 EchoSent(msg.GenerateStringMessage());
                 //txtReceived.AppendText(msg.ToString() + Environment.NewLine);
              }
-            catch(System.IO.IOException)
+            catch(System.IO.IOException ex)
             {
                 MessageBox.Show("Unable to Send Message");
+                Debug.WriteLine(ex);
             }
-            catch (System.Net.Sockets.SocketException)
+            catch (System.Net.Sockets.SocketException ex)
             {
+                Debug.WriteLine(ex);
                 MessageBox.Show("Unable to Send Message");
             }
         }
@@ -267,13 +269,15 @@ namespace GameClient
             if(world.LifePacks != null)
                 foreach(LifePack lifePack in world.LifePacks)
                 {
-                    gui.DrawMedi(lifePack.Position);
+                    if(lifePack.IsAlive)
+                        gui.DrawMedi(lifePack.Position);
                 }
 
             if (world.Coins != null)
                 foreach (Coin coin in world.Coins)
                 {
-                    gui.DrawCoin(coin.Position);
+                    if(coin.IsAlive)
+                        gui.DrawCoin(coin.Position);
                 }
 
             if (world.Players != null)
