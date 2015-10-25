@@ -11,7 +11,7 @@ namespace GameClient.Network.Messages
     /*
     Message sent from server to client, accepting the clients join request
     */
-    class JoinAcceptanceMessage : ServerMessage
+     public class JoinAcceptanceMessage : ServerMessage
     {
         /*
         The locations of players

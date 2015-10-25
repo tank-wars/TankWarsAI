@@ -9,7 +9,7 @@ using GameClient.GameDomain;
 
 namespace GameClient.Network.Messages
 {
-    class CoinsAvailableMessage : ServerMessage
+    public class CoinsAvailableMessage : ServerMessage
     {
         public Coin coin { get; set; }
 

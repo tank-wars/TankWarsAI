@@ -11,7 +11,7 @@ namespace GameClient.Network.Messages
     /*
     A Server originated message containing periodic update information
     */
-    class GlobalUpdateMessage : ServerMessage
+    public class GlobalUpdateMessage : ServerMessage
     {
         //The specific details embedded to the message
         public GlobalUpdate globalUpdate { get; set; }

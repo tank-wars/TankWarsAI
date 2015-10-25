@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameClient.Foundation;
 
-namespace GameClient.Network.Tests
+namespace UnitTestGameClient.Network
 {
     [TestClass()]
     public class TokenizerTests
@@ -18,9 +18,9 @@ namespace GameClient.Network.Tests
             string message1 = "L:12,33:132#";
             string[] result1 = Tokenizer.TokenizeSections(message1);
 
-            Assert.AreEqual(result1[0], "L", false);
-            Assert.AreEqual(result1[1], "12,33", false);
-            Assert.AreEqual(result1[2], "132", false);
+            Assert.AreEqual("L", result1[0], false);
+            Assert.AreEqual("12,33", result1[1], false);
+            Assert.AreEqual("132", result1[2], false);
             Assert.AreEqual(result1.Length, 3);
         }
 
@@ -30,27 +30,27 @@ namespace GameClient.Network.Tests
             String section1 = "P0;0,0;0;0;100;0;0";
             string[] result1 = Tokenizer.TokernizeParameters(section1);
 
-            Assert.AreEqual(result1[0], "P0", false);
-            Assert.AreEqual(result1[1], "0,0", false);
-            Assert.AreEqual(result1[2], "0", false);
-            Assert.AreEqual(result1[3], "0", false);
-            Assert.AreEqual(result1[4], "100", false);
-            Assert.AreEqual(result1[5], "0", false);
-            Assert.AreEqual(result1[6], "0", false);
-            Assert.AreEqual(result1.Length, 7);
+            Assert.AreEqual("P0", result1[0] , false);
+            Assert.AreEqual("0,0", result1[1], false);
+            Assert.AreEqual("0", result1[2], false);
+            Assert.AreEqual("0", result1[3], false);
+            Assert.AreEqual("100", result1[4],false);
+            Assert.AreEqual("0", result1[5], false);
+            Assert.AreEqual("0", result1[6], false);
+            Assert.AreEqual(7, result1.Length);
 
             String section2 = "3,1,0;5,7,0;1,4,0;3,6,0;4,8,0;8,4,0;7,6,0";
 
             string[] result2 = Tokenizer.TokernizeParameters(section2);
 
-            Assert.AreEqual(result2[0], "3,1,0", false);
-            Assert.AreEqual(result2[1], "5,7,0", false);
-            Assert.AreEqual(result2[2], "1,4,0", false);
-            Assert.AreEqual(result2[3], "3,6,0", false);
-            Assert.AreEqual(result2[4], "4,8,0", false);
-            Assert.AreEqual(result2[5], "8,4,0", false);
-            Assert.AreEqual(result2[6], "7,6,0", false);
-            Assert.AreEqual(result2.Length, 7);
+            Assert.AreEqual("3,1,0", result2[0], false);
+            Assert.AreEqual("5,7,0", result2[1], false);
+            Assert.AreEqual("1,4,0", result2[2], false);
+            Assert.AreEqual("3,6,0", result2[3],false);
+            Assert.AreEqual("4,8,0", result2[4], false);
+            Assert.AreEqual("8,4,0", result2[5], false);
+            Assert.AreEqual("7,6,0", result2[6], false);
+            Assert.AreEqual(7, result2.Length);
 
 
         }
@@ -60,19 +60,19 @@ namespace GameClient.Network.Tests
         {
             string cord1 = "1,2";
             Coordinate result1 = Tokenizer.TokernizeCoordinates(cord1);
-            Assert.AreEqual(result1.X, 1);
-            Assert.AreEqual(result1.Y, 2);
+            Assert.AreEqual(1, result1.X);
+            Assert.AreEqual(2, result1.Y);
 
             string cord2 = "-2,-5";
             Coordinate result2 = Tokenizer.TokernizeCoordinates(cord2);
-            Assert.AreEqual(result2.X, -2);
-            Assert.AreEqual(result2.Y, -5);
+            Assert.AreEqual(-2, result2.X);
+            Assert.AreEqual(-5, result2.Y);
 
 
             string cord3 = " 1,4 ";
             Coordinate result3 = Tokenizer.TokernizeCoordinates(cord3);
-            Assert.AreEqual(result3.X, 1);
-            Assert.AreEqual(result3.Y, 4);
+            Assert.AreEqual(1, result3.X);
+            Assert.AreEqual(4, result3.Y);
 
         }
 
@@ -81,25 +81,25 @@ namespace GameClient.Network.Tests
         {
             string arr1 = "1,2,3";
             int[] result1 = Tokenizer.TokernizeIntArray(arr1);
-            Assert.AreEqual(result1[0], 1);
-            Assert.AreEqual(result1[1], 2);
-            Assert.AreEqual(result1[2], 3);
-            Assert.AreEqual(result1.Length, 3);
+            Assert.AreEqual(1, result1[0]);
+            Assert.AreEqual(2, result1[1]);
+            Assert.AreEqual(3, result1[2]);
+            Assert.AreEqual(3, result1.Length);
 
            
             string arr2 = " 1 , 2,3 ";
             int[] result2 = Tokenizer.TokernizeIntArray(arr2);
-            Assert.AreEqual(result2[0], 1);
-            Assert.AreEqual(result2[1], 2);
-            Assert.AreEqual(result2[2], 3);
-            Assert.AreEqual(result2.Length, 3);
+            Assert.AreEqual(1, result2[0]);
+            Assert.AreEqual(2, result2[1]);
+            Assert.AreEqual(3, result2[2]);
+            Assert.AreEqual(3, result2.Length);
 
             string arr3 = "-1,-2,3";
             int[] result3 = Tokenizer.TokernizeIntArray(arr3);
-            Assert.AreEqual(result3[0], -1);
-            Assert.AreEqual(result3[1], -2);
-            Assert.AreEqual(result3[2], 3);
-            Assert.AreEqual(result3.Length, 3);
+            Assert.AreEqual(-1, result3[0]);
+            Assert.AreEqual(-2, result3[1]);
+            Assert.AreEqual(3, result3[2]);
+            Assert.AreEqual(3, result3.Length);
 
         }
     }

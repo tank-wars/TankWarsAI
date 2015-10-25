@@ -8,7 +8,7 @@ using GameClient.Foundation;
 
 namespace GameClient.Network.Messages
 {
-    class LifePackAvailableMessage : ServerMessage
+    public class LifePackAvailableMessage : ServerMessage
     {
         public LifePack lifePack { get; set; }
 
