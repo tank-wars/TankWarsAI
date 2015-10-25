@@ -9,6 +9,7 @@ namespace GameClient.GameDomain
 {
     /*
      Coins are displayed in Gameworld only for a limited time. A player may grab a coin by moving over it.
+     The class Coin Represents a coin pile in gameworld
     */
     public class Coin
     {
@@ -40,7 +41,7 @@ namespace GameClient.GameDomain
         }
 
         /*
-        is the coin still alive
+            Is the CoinPile still available in map?
         */
         public bool IsAlive
         {

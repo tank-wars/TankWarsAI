@@ -28,7 +28,7 @@ namespace GameClient.GameDomain
         }
 
         /*
-        is the medi pack still alive
+         Is the medi pack still available in map?
         */
         public bool IsAlive
         {

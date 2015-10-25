@@ -10,12 +10,15 @@ using System.Threading.Tasks;
 namespace GameClient.Network
 {
     //Support tool to safely close connections
+    //Avoids possible null pointer exceptions due to uninitialized variables
+    //Avoids already closed type exceptions
     class NetworkUtils
     {
         private NetworkUtils()
         {
 
         }
+        //Safely close a socket
         public static void CloseSafely(Socket socket)
         {
             if(socket != null)
@@ -35,6 +38,8 @@ namespace GameClient.Network
 
             }
         }
+
+        //Safely close a stream
         public static void CloseSafely(Stream stream)
         {
             if (stream != null)
@@ -55,6 +60,7 @@ namespace GameClient.Network
             }
         }
 
+        //Safely close a StreamReader
         public static void CloseSafely(StreamReader r)
         {
             if (r != null)
@@ -74,6 +80,8 @@ namespace GameClient.Network
 
             }
         }
+
+        //Safely close a StreamWritter
         public static void CloseSafely(StreamWriter w)
         {
             if (w != null)

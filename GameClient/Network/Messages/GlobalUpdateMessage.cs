@@ -8,10 +8,15 @@ using GameClient.Foundation;
 
 namespace GameClient.Network.Messages
 {
+    /*
+    A Server originated message containing periodic update information
+    */
     class GlobalUpdateMessage : ServerMessage
     {
+        //The specific details embedded to the message
         public GlobalUpdate globalUpdate { get; set; }
 
+        //Apply the message's effect to GameWorld
         public override void Execute()
         {
             GameWorld.Instance.BrickState = globalUpdate.brickUpdate;
@@ -19,6 +24,7 @@ namespace GameClient.Network.Messages
             GameWorld.Instance.AdvanceFrame();
         }
 
+        //Obtain String representation
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
@@ -29,12 +35,16 @@ namespace GameClient.Network.Messages
             return builder.ToString();
         }
 
+        //The class holding particular details of a GlobalUpdate message
         public class GlobalUpdate
         {
+            //The details of players
             public PlayerDetails[] PlayerUpdates { get; set; }
 
+            //The updated details of bricks
             public Brick[] brickUpdate { get; set; }
 
+            //Obtain textual represention of GlobalUpdate
             public override string ToString()
             {
                 StringBuilder builder = new StringBuilder();
@@ -52,7 +62,9 @@ namespace GameClient.Network.Messages
             }
         }
 
-
+        /*
+        The parser used to parse GlobalUpdate Messages. Returns null if the message is not a valid GlobalUpdateMessage
+        */
         public class GlobalUpdateMessageParser : ServerMessage.ServerMessageParser
         {
             private static GlobalUpdateMessageParser instance = null;
@@ -79,6 +91,7 @@ namespace GameClient.Network.Messages
                     */
 
                     GlobalUpdate globalUpdate = new GlobalUpdate();
+                    //Load player details
                     PlayerDetails[] playerUpdate = new PlayerDetails[sections.Length-2];
                     for(int i = 1; i < sections.Length - 1; i++)
                     {
@@ -95,6 +108,7 @@ namespace GameClient.Network.Messages
                         playerUpdate[i-1] = player;
                     }
 
+                    //Load bricks updates
                     string[] paras = Tokenizer.TokernizeParameters(sections[sections.Length-1]);
                     Brick[] brickUpdate = new Brick[paras.Length];
                     for(int i = 0; i < paras.Length; i++)
@@ -105,6 +119,8 @@ namespace GameClient.Network.Messages
                         brick.DamageLevel = brickDamage[2];
                         brickUpdate[i] = brick;
                     }
+
+                    //Formulate result
 
                     globalUpdate.PlayerUpdates = playerUpdate;
                     globalUpdate.brickUpdate = brickUpdate;

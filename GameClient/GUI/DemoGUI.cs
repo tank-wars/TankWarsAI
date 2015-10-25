@@ -38,6 +38,7 @@ namespace GameClient.GUI
             }
 
         }
+        //Set of brushes that will be chosen in sequence to pain each players tank
         private Brush[] TankBrushes
         {
             get
@@ -99,6 +100,8 @@ namespace GameClient.GUI
 
         /* End of section */
 
+
+
         private Graphics graphics;
         private Point origin;
         private int size;
@@ -139,7 +142,7 @@ namespace GameClient.GUI
         }
 
        
-
+        //Draw the Grid in Background
         public void DrawGrid()
         {
             for(int r = 0; r <= RowCount; r++)
@@ -168,6 +171,9 @@ namespace GameClient.GUI
             throw new Exception("Unidentified Direction");
         }
 
+
+        //Fills the cell at location using given brush
+        //Cells are half filled based on health condition
         private void FillCell(Coordinate location, Brush brush, int health)
         {
             

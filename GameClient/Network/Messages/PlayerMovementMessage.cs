@@ -7,7 +7,7 @@ using GameClient.Foundation;
 namespace GameClient.Network.Messages
 {
     /*
-        A message from client to server requesting it to move our player
+        A Client Originated message requesting it to move our player
     */
     class PlayerMovementMessage : ClientMessage
     {
@@ -30,6 +30,9 @@ namespace GameClient.Network.Messages
                 movementDirection = value;
             }
         }
+        /*
+        Generate exact message to be sent
+        */
         public override string GenerateStringMessage()
         {
             switch(movementDirection)

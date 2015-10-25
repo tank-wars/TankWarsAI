@@ -115,19 +115,31 @@ namespace GameClient.Network.Communicator
 
                 }
             }
-           
-            
-            IPEndPoint remoteEndPoint = new IPEndPoint(ipAddress, configuration.ServerPort);
-            Socket sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            sock.Connect(remoteEndPoint);
 
-            Stream strm = new NetworkStream(sock);
-            StreamWriter writer = new StreamWriter(strm);
-            writer.AutoFlush = true;
-            writer.Write(message);
-            writer.Flush();
-            writer.Close();
-            sock.Close();
+            Socket sock = null;
+            StreamWriter writer = null;
+            try
+            {
+                //Setup Connection
+                IPEndPoint remoteEndPoint = new IPEndPoint(ipAddress, configuration.ServerPort);
+                sock = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                sock.Connect(remoteEndPoint);
+
+                //Transmit
+                Stream strm = new NetworkStream(sock);
+                writer = new StreamWriter(strm);
+                writer.AutoFlush = true;
+                writer.Write(message);
+                writer.Flush();
+
+            }
+            finally
+            {
+                //close
+                NetworkUtils.CloseSafely(writer);
+                NetworkUtils.CloseSafely(sock);
+            }
+            
         }
 
         //Event Arguements passed to MessageReceived event
@@ -154,6 +166,7 @@ namespace GameClient.Network.Communicator
             private BackgroundWorker backgroundWorker; //background thread used to listen
             private int port; //clients port
             
+            //Is the listener running
             public bool IsListening
             {
                 get
@@ -168,6 +181,7 @@ namespace GameClient.Network.Communicator
                 this.port = configuration.ClientPort;           
             }
 
+            //Should be called when restarting listener
             public void StartListener()
             {
                 //background worker will be listening to incomming messages from server
@@ -263,16 +277,19 @@ namespace GameClient.Network.Communicator
                         }
                         catch (SocketException ex)
                         {
+                            //Report to Client
                             Debug.WriteLine("Error: " + ex.Message);
                             backgroundWorker.ReportProgress(PROGRESS_ERROR, ex); //report error condition
                         }
                         catch (IOException ex)
                         {
+                            //Report to Client
                             Debug.WriteLine("Error: " + ex.Message);
                             backgroundWorker.ReportProgress(PROGRESS_ERROR, ex); //report error condition
                         }
                         finally
                         {
+                            //close connections
                             NetworkUtils.CloseSafely(reader);
                             NetworkUtils.CloseSafely(networkStream);
                             NetworkUtils.CloseSafely(handler);
@@ -281,22 +298,23 @@ namespace GameClient.Network.Communicator
                         
                     }
 
-                    listener.Close();
 
                 }
                 catch (SocketException ex)
                 {
+                    //Report to Client
                     Debug.WriteLine("Error: " + ex.Message);
                     backgroundWorker.ReportProgress(PROGRESS_ERROR, ex);
                 }
                 catch(IOException ex)
                 {
+                    //Report to Client
                     Debug.WriteLine("Error: " + ex.Message);
                     backgroundWorker.ReportProgress(PROGRESS_ERROR, ex);
                 }
                 finally
                 {
-                  
+                    //close connections 
                     NetworkUtils.CloseSafely(listener);
                 }
 
@@ -311,6 +329,9 @@ namespace GameClient.Network.Communicator
            
         }
         
+        /*
+        Configurations are used to initialize a Communication Connection
+        */
         public class Configuration
         {
             private int mServerPort;

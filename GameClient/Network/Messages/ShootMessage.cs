@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace GameClient.Network.Messages
 {
+    /*
+    A client originated message requesting server to make player shoot
+    */
     class ShootMessage : ClientMessage
     {
+        //Exact message sent to server
         public override string GenerateStringMessage()
         {
             return "SHOOT#";

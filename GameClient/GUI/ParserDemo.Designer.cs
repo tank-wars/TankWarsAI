@@ -35,7 +35,7 @@
             this.btnSouth = new System.Windows.Forms.Button();
             this.btnWest = new System.Windows.Forms.Button();
             this.btnEast = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnShoot = new System.Windows.Forms.Button();
             this.chkEchoConsole = new System.Windows.Forms.CheckBox();
             this.chkEchoRaw = new System.Windows.Forms.CheckBox();
             this.chkEchoSent = new System.Windows.Forms.CheckBox();
@@ -68,7 +68,7 @@
             this.btnSendRAW.TabIndex = 1;
             this.btnSendRAW.Text = "Send";
             this.btnSendRAW.UseVisualStyleBackColor = true;
-            this.btnSendRAW.Click += new System.EventHandler(this.button1_Click);
+            this.btnSendRAW.Click += new System.EventHandler(this.btnSendRaw_Click);
             // 
             // btnJoin
             // 
@@ -125,16 +125,16 @@
             this.btnEast.UseVisualStyleBackColor = true;
             this.btnEast.Click += new System.EventHandler(this.btnEast_Click);
             // 
-            // button2
+            // btnShoot
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(3, 108);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "Shoot";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnShoot.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnShoot.Location = new System.Drawing.Point(3, 108);
+            this.btnShoot.Name = "btnShoot";
+            this.btnShoot.Size = new System.Drawing.Size(75, 23);
+            this.btnShoot.TabIndex = 8;
+            this.btnShoot.Text = "Shoot";
+            this.btnShoot.UseVisualStyleBackColor = true;
+            this.btnShoot.Click += new System.EventHandler(this.btnShoot_Click);
             // 
             // chkEchoConsole
             // 
@@ -148,7 +148,6 @@
             this.chkEchoConsole.TabIndex = 9;
             this.chkEchoConsole.Text = "Echo to Console";
             this.chkEchoConsole.UseVisualStyleBackColor = true;
-            this.chkEchoConsole.CheckedChanged += new System.EventHandler(this.chkEchoConsole_CheckedChanged);
             // 
             // chkEchoRaw
             // 
@@ -184,7 +183,6 @@
             this.chkEchoParsed.TabIndex = 12;
             this.chkEchoParsed.Text = "Echo Parser Output";
             this.chkEchoParsed.UseVisualStyleBackColor = true;
-            this.chkEchoParsed.CheckedChanged += new System.EventHandler(this.chkEchoParsed_CheckedChanged);
             // 
             // pnlControl
             // 
@@ -194,7 +192,7 @@
             this.pnlControl.Controls.Add(this.btnSouth);
             this.pnlControl.Controls.Add(this.btnWest);
             this.pnlControl.Controls.Add(this.btnEast);
-            this.pnlControl.Controls.Add(this.button2);
+            this.pnlControl.Controls.Add(this.btnShoot);
             this.pnlControl.Enabled = false;
             this.pnlControl.Location = new System.Drawing.Point(449, 46);
             this.pnlControl.Name = "pnlControl";
@@ -253,7 +251,6 @@
             this.chkEchoGameWorld.TabIndex = 18;
             this.chkEchoGameWorld.Text = "Game World Updates";
             this.chkEchoGameWorld.UseVisualStyleBackColor = true;
-            this.chkEchoGameWorld.CheckedChanged += new System.EventHandler(this.chkEchoGameWorld_CheckedChanged);
             // 
             // frmDemoParser
             // 
@@ -291,7 +288,7 @@
         private System.Windows.Forms.Button btnSouth;
         private System.Windows.Forms.Button btnWest;
         private System.Windows.Forms.Button btnEast;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnShoot;
         private System.Windows.Forms.CheckBox chkEchoConsole;
         private System.Windows.Forms.CheckBox chkEchoRaw;
         private System.Windows.Forms.CheckBox chkEchoSent;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GameClient.Network.Messages
 {
     /*
-    A message sent from server stating that it cannot honour a movement or shoot request
+    A Server originated message stating that it cannot honour a movement or shoot request
     */
     class NegativeHonourMessage : ServerMessage
     {
@@ -33,11 +33,15 @@ namespace GameClient.Network.Messages
             this.reason = reason;
         }
 
+        //TODO: Report to GameEngine about Negative Honour
         public override void Execute()
         {
-            //throw new NotImplementedException();
+            
         }
 
+        /*
+        Textual Representation for loging purposes
+        */
         public override string ToString()
         {
             switch(reason)
@@ -94,6 +98,9 @@ namespace GameClient.Network.Messages
                     return instance;
                 }
             }
+            /*
+            Detect and parse message. IF not a NegativeHonour, returns null
+            */
             public override ServerMessage TryParse(string[] sections)
             {
                 string msg = sections[0];

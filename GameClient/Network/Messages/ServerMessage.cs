@@ -8,10 +8,11 @@ namespace GameClient.Network.Messages
 {
     /*
         The parent type of the object returned by a specialization of ServerMessageParser
-        A parsed message sent from the Server
+        A parsed Server Originated Message
     */
     public abstract class ServerMessage
     {
+        //Apply the effects of the message to game world
         public abstract void Execute();
         public abstract override string ToString();
 

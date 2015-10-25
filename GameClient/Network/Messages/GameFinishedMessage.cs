@@ -7,8 +7,12 @@ using GameClient.GameDomain;
 
 namespace GameClient.Network.Messages
 {
+    /*
+    A server originated message informing that the Game has finished
+    */
     class GameFinishedMessage : ServerMessage
     {
+        //Update the GameWorld
         public override void Execute()
         {
             GameWorld.Instance.State = GameWorld.GameWorldState.Finished;
@@ -19,6 +23,7 @@ namespace GameClient.Network.Messages
             return "Game finished!!!";
         }
 
+        //The parser to detect and parse Game Finished Messages
         public class GameFinishedMessageParser : ServerMessageParser
         {
             private GameFinishedMessageParser()
@@ -35,6 +40,7 @@ namespace GameClient.Network.Messages
                     return instance;
                 }
             }
+            //If success, return parsed object. Otherwise returns null
             public override ServerMessage TryParse(string[] sections)
             {
                 if(sections[0].Trim().ToUpper() == "GAME_FINISHED")

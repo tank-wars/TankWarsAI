@@ -28,12 +28,14 @@ namespace GameClient.Network.Messages
                 playerDetails = value;
             }
         }
-        
+
+        //Apply the message to GameWorld
         public override void Execute()
         {
             GameWorld.Instance.Players = playerDetails;
         }
 
+        //Obtain textual representation
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();

@@ -32,12 +32,13 @@ namespace GameClient.Network.Messages
             this.messageType = type;
         }
 
+        //TODO: Report to GUI stating connection failed
         public override void Execute()
         {
 
-            //throw new NotImplementedException();
         }
 
+        //Textual Representation
         public override string ToString()
         {
             switch(messageType)
@@ -53,6 +54,7 @@ namespace GameClient.Network.Messages
             return "Join Failure: ";
         }
 
+        //The parser to detect and parse JoinFailure messages
         public class JoinFailureMessageParser : ServerMessageParser
         {
             private JoinFailureMessageParser()
@@ -69,6 +71,8 @@ namespace GameClient.Network.Messages
                     return instance;
                 }
             }
+
+            
             public override ServerMessage TryParse(string[] sections)
             {
                 if(sections[0].ToUpper().Trim() == "PLAYERS_FULL")

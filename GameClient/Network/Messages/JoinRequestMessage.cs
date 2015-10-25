@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace GameClient.Network.Messages
 {
+    /*
+    A Client originated message requesting server to join client
+    */
     class JoinRequestMessage : ClientMessage
     {
+        /*
+        The message string to be sent
+        */
         public override string GenerateStringMessage()
         {
             return "JOIN#";
