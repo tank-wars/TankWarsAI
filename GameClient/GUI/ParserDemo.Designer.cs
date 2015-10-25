@@ -46,6 +46,7 @@
             this.btnConnect = new System.Windows.Forms.Button();
             this.pnlMapGUI = new System.Windows.Forms.Panel();
             this.chkEchoGameWorld = new System.Windows.Forms.CheckBox();
+            this.btnKeyboard = new System.Windows.Forms.Button();
             this.pnlControl.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -252,11 +253,23 @@
             this.chkEchoGameWorld.Text = "Game World Updates";
             this.chkEchoGameWorld.UseVisualStyleBackColor = true;
             // 
+            // btnKeyboard
+            // 
+            this.btnKeyboard.Enabled = false;
+            this.btnKeyboard.Location = new System.Drawing.Point(452, 205);
+            this.btnKeyboard.Name = "btnKeyboard";
+            this.btnKeyboard.Size = new System.Drawing.Size(75, 23);
+            this.btnKeyboard.TabIndex = 19;
+            this.btnKeyboard.Text = "Keyboard Mode";
+            this.btnKeyboard.UseVisualStyleBackColor = true;
+            this.btnKeyboard.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmDemoParser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(536, 463);
+            this.Controls.Add(this.btnKeyboard);
             this.Controls.Add(this.chkEchoGameWorld);
             this.Controls.Add(this.pnlMapGUI);
             this.Controls.Add(this.btnConnect);
@@ -273,6 +286,7 @@
             this.Name = "frmDemoParser";
             this.Text = "Parser Demo";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmDemoParser_KeyDown);
             this.pnlControl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -299,6 +313,7 @@
         private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.Panel pnlMapGUI;
         private System.Windows.Forms.CheckBox chkEchoGameWorld;
+        private System.Windows.Forms.Button btnKeyboard;
     }
 }
 
