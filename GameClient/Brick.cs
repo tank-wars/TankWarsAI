@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameClient
 {
-    class Brick
+    public class Brick
     {
         public Coordinate Postition { get; set; }
 

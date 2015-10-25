@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameClient
 {
-    class PlayerDetails
+    public class PlayerDetails
     {
         public Direction Direction { get; set; }
 

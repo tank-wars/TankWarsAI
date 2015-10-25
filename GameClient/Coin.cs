@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameClient
 {
-    class Coin
+    public class Coin
     {
         public Coordinate Position { get; set; }
 
