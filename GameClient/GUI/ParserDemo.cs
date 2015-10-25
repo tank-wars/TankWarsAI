@@ -43,6 +43,7 @@ namespace GameClient
 
             btnSendRAW.Enabled = true;
             pnlControl.Enabled = true;
+            btnKeyboard.Enabled = true;
             btnConnect.Enabled = false;
             txtHost.Enabled = false;
         }
@@ -340,6 +341,133 @@ namespace GameClient
             pnlMapGUI.Invalidate();
         }
 
-        
+        bool useKeyboard = false;
+
+        private void frmDemoParser_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!useKeyboard)
+                return;
+
+            switch(e.KeyCode)
+            {
+                case Keys.Up:
+                    try
+                    {
+                        ClientMessage msg = new PlayerMovementMessage(Direction.North);
+                        Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                        EchoSent(msg.GenerateStringMessage());
+
+                    }
+                    catch (System.IO.IOException)
+                    {
+                        MessageBox.Show("Unable to Send Message");
+                    }
+                    catch (System.Net.Sockets.SocketException)
+                    {
+                        MessageBox.Show("Unable to Send Message");
+                    }
+                    break;
+                case Keys.Down:
+                    try
+                    {
+                        ClientMessage msg = new PlayerMovementMessage(Direction.South);
+                        Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                        EchoSent(msg.GenerateStringMessage());
+
+                    }
+                    catch (System.IO.IOException)
+                    {
+                        MessageBox.Show("Unable to Send Message");
+                    }
+                    catch (System.Net.Sockets.SocketException)
+                    {
+                        MessageBox.Show("Unable to Send Message");
+                    }
+                    break;
+                case Keys.Left:
+                    try
+                    {
+                        ClientMessage msg = new PlayerMovementMessage(Direction.West);
+                        Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                        EchoSent(msg.GenerateStringMessage());
+
+                    }
+                    catch (System.IO.IOException)
+                    {
+                        MessageBox.Show("Unable to Send Message");
+                    }
+                    catch (System.Net.Sockets.SocketException)
+                    {
+                        MessageBox.Show("Unable to Send Message");
+                    }
+                    break;
+                case Keys.Right:
+                    try
+                    {
+                        ClientMessage msg = new PlayerMovementMessage(Direction.East);
+                        Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                        EchoSent(msg.GenerateStringMessage());
+
+                    }
+                    catch (System.IO.IOException)
+                    {
+                        MessageBox.Show("Unable to Send Message");
+                    }
+                    catch (System.Net.Sockets.SocketException)
+                    {
+                        MessageBox.Show("Unable to Send Message");
+                    }
+                    break;
+                case Keys.Space:
+                    try
+                    {
+                        ClientMessage msg = new ShootMessage();
+                        Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                        EchoSent(msg.GenerateStringMessage());
+
+                    }
+                    catch (System.IO.IOException)
+                    {
+                        MessageBox.Show("Unable to Send Message");
+                    }
+                    catch (System.Net.Sockets.SocketException)
+                    {
+                        MessageBox.Show("Unable to Send Message");
+                    }
+                    break;
+                case Keys.Escape:
+                    pnlControl.Enabled = true;
+                    btnConnect.Enabled = true;
+                    txtHost.Enabled = true;
+                    txtSend.Enabled = true;
+                    btnSendRAW.Enabled = true;
+                    btnKeyboard.Enabled = true;
+                    chkEchoConsole.Enabled = true;
+                    chkEchoGameWorld.Enabled = true;
+                    chkEchoParsed.Enabled = true;
+                    chkEchoRaw.Enabled = true;
+                    chkEchoSent.Enabled = true;
+                 
+                    useKeyboard = false;
+                    break;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Use Arrowkeys to Move and Space to Shoot. Press Escape to return to Manual Mode");
+            pnlControl.Enabled = false;
+            btnConnect.Enabled = false;
+            txtHost.Enabled = false;
+            txtSend.Enabled = false;
+            btnSendRAW.Enabled = false;
+            btnKeyboard.Enabled = false;
+            chkEchoConsole.Enabled = false;
+            chkEchoGameWorld.Enabled = false;
+            chkEchoParsed.Enabled = false;
+            chkEchoRaw.Enabled = false;
+            chkEchoSent.Enabled = false;
+            useKeyboard = true;
+        }
     }
 }
