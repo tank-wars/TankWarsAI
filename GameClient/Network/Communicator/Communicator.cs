@@ -17,7 +17,7 @@ namespace GameClient.Network.Communicator
     /*
         Handles Communication with Game Server
     */
-    class Communicator
+    public class Communicator
     {
         private Receiver receiver;
         private Configuration configuration;

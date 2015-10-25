@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GameClient.Foundation
 {
+    /*
+    Represents a point in a two dimensional space. Coordinates can be positive or negative
+    */
     public struct Coordinate
     {
         private int x;
@@ -18,12 +21,18 @@ namespace GameClient.Foundation
             this.x = x;
             this.y = y;
         }
+        /*
+            Provides a textual description of coordinate
+        */
         public override string ToString()
         {
             return "(" + x.ToString() + ", " + y.ToString() + ")";
         }
 
-        public static string coordinateArrayToString(Coordinate[] para)
+        /*
+            The ToString() for an array of coordinate objects
+        */
+        public static string CoordinateArrayToString(Coordinate[] para)
         {
             StringBuilder builder = new StringBuilder();
             foreach (Coordinate coordinate in para)

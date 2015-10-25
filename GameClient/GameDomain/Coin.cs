@@ -7,12 +7,15 @@ using GameClient.Foundation;
 
 namespace GameClient.GameDomain
 {
+    /*
+     Coins are displayed in Gameworld only for a limited time. A player may grab a coin by moving over it.
+    */
     public class Coin
     {
         public Coordinate Position { get; set; }
 
         public int TimeLimit { get; set; }
-
+        /* Value of Coin */
         public int Value { get; set; }
 
         public override string ToString()
@@ -55,6 +58,9 @@ namespace GameClient.GameDomain
             this.grabbed = true;
         }
 
+        /*
+        Update the coins remaining time
+        */
         public void AdvanceFrame()
         {
             if (elapsedTime < TimeLimit)

@@ -100,7 +100,7 @@ namespace GameClient.Network.Messages
                     for(int i = 0; i < paras.Length; i++)
                     {
                         Brick brick = new Brick();
-                        int[] brickDamage= Tokenizer.TokernizeBrickDamage(paras[i]);
+                        int[] brickDamage= Tokenizer.TokernizeIntArray(paras[i]);
                         brick.Postition = new Coordinate(brickDamage[0], brickDamage[1]);
                         brick.DamageLevel = brickDamage[2];
                         brickUpdate[i] = brick;

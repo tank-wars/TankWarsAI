@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 using GameClient.Foundation;
 namespace GameClient.Network
 {
-    class Tokenizer
+    /*
+        Contains helper methods to tokenize messages.
+    */
+    public class Tokenizer
     {
         private Tokenizer()
         {
@@ -36,17 +39,10 @@ namespace GameClient.Network
             string[] paras = trimmedSection.Split(new char[] { ";"[0] }, StringSplitOptions.RemoveEmptyEntries);
             return paras;
         }
+
         /*
             Coordinates are separated by ,. A parameter may have 1 or 2 coordinates
         */
-
-        /*        public static String[] TokernizeCoordinates(String parameter)
-                {
-                    string trimmedParameter = parameter.Trim();
-
-                    string[] paras = trimmedParameter.Split(new char[] { ";"[0] }, StringSplitOptions.RemoveEmptyEntries);
-                    return paras;
-                }*/
         public static Coordinate TokernizeCoordinates(String parameter)
         {
             string trimmedParameter = parameter.Trim();
@@ -56,8 +52,11 @@ namespace GameClient.Network
             return c;
         }
 
+        /*
+            Tokenize a bridge dammage message which consists of int array
+        */
 
-        public static int[] TokernizeBrickDamage(String parameter)
+        public static int[] TokernizeIntArray(String parameter)
         {
             string trimmedParameter = parameter.Trim();
 

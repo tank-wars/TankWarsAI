@@ -8,22 +8,41 @@ using System.Threading.Tasks;
 
 namespace GameClient.GameDomain
 {
+    /*
+    The class combining all the components of the Game. Consists of Map, Players. Handles dynamics related to time-elapse.
+    */
     class GameWorld
     {
-        
+        /*
+        Has the GameWorld been started?
+        */
         public GameWorldState State { get { return state; } set { state = value; } }
         
+        /*
+        Contains locations of non-movable objects of map
+        */
         public MapDetails Map { get; set; }
 
+        /*
+        The players in the GameWorlds
+        */
         public PlayerDetails[] Players { get; set; }
-
+        /*
+        The updated states of bricks. 
+        */
         public Brick[] BrickState { get; set; }
 
-
+        /*
+        The coins that are added to the world
+        */
         private List<Coin> coins = new List<Coin>();
 
+        /*
+        The life packs that are added to the world
+        */
         private List<LifePack> lifePacks = new List<LifePack>();
 
+        //Singleton Instance
         private static GameWorld instance = null;
 
         private GameWorldState state = GameWorldState.NotStarted;
@@ -43,6 +62,9 @@ namespace GameClient.GameDomain
             }
         }
 
+        /*
+        The coins that are added to the world
+        */
         public List<Coin> Coins
         {
             get
@@ -51,12 +73,17 @@ namespace GameClient.GameDomain
             }
             set { coins = value; }
         }
+
+        /*
+        The life packs that are added to the world
+        */
         public List<LifePack> LifePacks
         {
             get { return lifePacks;  }
             set { lifePacks = value; }
         }
 
+        
         private GameWorld()
         {
             
@@ -72,6 +99,9 @@ namespace GameClient.GameDomain
             }
         }
 
+        /*
+         A textual description of entire GameWorld
+        */
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();

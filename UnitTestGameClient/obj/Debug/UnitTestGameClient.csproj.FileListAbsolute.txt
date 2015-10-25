@@ -5,3 +5,10 @@ C:\Users\Dulaj\Documents\Visual Studio 2015\tankgame\UnitTestGameClient\bin\Debu
 C:\Users\Dulaj\Documents\Visual Studio 2015\tankgame\UnitTestGameClient\obj\Debug\UnitTestGameClient.csprojResolveAssemblyReference.cache
 C:\Users\Dulaj\Documents\Visual Studio 2015\tankgame\UnitTestGameClient\obj\Debug\UnitTestGameClient.dll
 C:\Users\Dulaj\Documents\Visual Studio 2015\tankgame\UnitTestGameClient\obj\Debug\UnitTestGameClient.pdb
+C:\Users\Madhawa\Documents\Visual Studio 2015\Projects\GameClient\UnitTestGameClient\bin\Debug\UnitTestGameClient.dll
+C:\Users\Madhawa\Documents\Visual Studio 2015\Projects\GameClient\UnitTestGameClient\bin\Debug\UnitTestGameClient.pdb
+C:\Users\Madhawa\Documents\Visual Studio 2015\Projects\GameClient\UnitTestGameClient\bin\Debug\GameClient.exe
+C:\Users\Madhawa\Documents\Visual Studio 2015\Projects\GameClient\UnitTestGameClient\bin\Debug\GameClient.pdb
+C:\Users\Madhawa\Documents\Visual Studio 2015\Projects\GameClient\UnitTestGameClient\obj\Debug\UnitTestGameClient.csprojResolveAssemblyReference.cache
+C:\Users\Madhawa\Documents\Visual Studio 2015\Projects\GameClient\UnitTestGameClient\obj\Debug\UnitTestGameClient.dll
+C:\Users\Madhawa\Documents\Visual Studio 2015\Projects\GameClient\UnitTestGameClient\obj\Debug\UnitTestGameClient.pdb

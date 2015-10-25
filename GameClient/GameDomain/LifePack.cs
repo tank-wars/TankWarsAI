@@ -7,11 +7,17 @@ using GameClient.Foundation;
 
 namespace GameClient.GameDomain
 {
+
+    /*
+     Lifepacks are displayed in Gameworld only for a limited time. A player may grab a lfiepack by moving over it.
+    */
     public class LifePack
     {
         public Coordinate Position { get; set; }
 
+        //is the lifepack already grabed by someone
         private bool grabbed = false;
+        //time since addition of lifepack to world
         private int elapsedTime = 0;
         public int RemainingTime {
             get
@@ -40,9 +46,12 @@ namespace GameClient.GameDomain
             this.grabbed = true;
         }
 
-
+        //The lifetime of life-pack
         public int TimeLimit { get; set; }
 
+        /*
+        A textual representation of lifepack
+        */
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
@@ -50,6 +59,10 @@ namespace GameClient.GameDomain
             return builder.ToString();
         }
 
+        /*
+        Advance time to next frame. Updating the elapsed time of lifepack.
+        Checks whether the lifepack is grabbed at this frame
+        */
         public void AdvanceFrame()
         {
             if (elapsedTime < TimeLimit)
