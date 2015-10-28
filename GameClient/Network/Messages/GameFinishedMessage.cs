@@ -16,6 +16,7 @@ namespace GameClient.Network.Messages
         public override void Execute()
         {
             GameWorld.Instance.State = GameWorld.GameWorldState.Finished;
+            
         }
 
         public override string ToString()

@@ -16,7 +16,21 @@ namespace GameClient.GameDomain
         /*
         Has the GameWorld been started?
         */
-        public GameWorldState State { get { return state; } set { state = value; } }
+        public GameWorldState State { get { return state; }
+            set {
+                state = value;
+                if (state == GameWorldState.Finished)
+                {
+                    EventHandler handler = GameWorld.Instance.GameFinished;
+                    if (handler != null)
+                    {
+                        EventArgs args = new EventArgs();
+                        
+                        handler(GameWorld.Instance, args);
+                    }
+                }
+            }
+        }
         
         /*
         Contains locations of non-movable objects of map
@@ -83,7 +97,10 @@ namespace GameClient.GameDomain
             set { lifePacks = value; }
         }
 
-        
+        //event raised when game is finished
+        public event EventHandler GameFinished;
+
+
         private GameWorld()
         {
             

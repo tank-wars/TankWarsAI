@@ -31,7 +31,14 @@ namespace GameClient
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Console.Title = "TankGame Parser Outputs";               
+            Console.Title = "TankGame Parser Outputs";
+            GameWorld.Instance.GameFinished += Instance_GameFinished;  
+        }
+
+        private void Instance_GameFinished(object sender, EventArgs e)
+        {
+            MessageBox.Show("Game Over");
+            this.Close();
         }
 
         private void btnConnect_Click(object sender, EventArgs e)

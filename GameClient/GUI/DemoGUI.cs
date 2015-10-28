@@ -9,6 +9,7 @@ using GameClient.Foundation;
 using GameClient.Network;
 using GameClient.Network.Communicator;
 using GameClient.GameDomain;
+using System.Windows.Forms;
 
 namespace GameClient.GUI
 {
@@ -72,6 +73,7 @@ namespace GameClient.GUI
             get { return Brushes.Red; }
         }
 
+       
         private Brush StoneBrush
         {
             get
