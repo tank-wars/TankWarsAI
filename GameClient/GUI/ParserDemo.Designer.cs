@@ -30,7 +30,6 @@
         {
             this.txtSend = new System.Windows.Forms.TextBox();
             this.btnSendRAW = new System.Windows.Forms.Button();
-            this.btnJoin = new System.Windows.Forms.Button();
             this.btnNorth = new System.Windows.Forms.Button();
             this.btnSouth = new System.Windows.Forms.Button();
             this.btnWest = new System.Windows.Forms.Button();
@@ -47,6 +46,7 @@
             this.pnlMapGUI = new System.Windows.Forms.Panel();
             this.chkEchoGameWorld = new System.Windows.Forms.CheckBox();
             this.btnKeyboard = new System.Windows.Forms.Button();
+            this.btnJoin = new System.Windows.Forms.Button();
             this.pnlControl.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,21 +71,10 @@
             this.btnSendRAW.UseVisualStyleBackColor = true;
             this.btnSendRAW.Click += new System.EventHandler(this.btnSendRaw_Click);
             // 
-            // btnJoin
-            // 
-            this.btnJoin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnJoin.Location = new System.Drawing.Point(3, 3);
-            this.btnJoin.Name = "btnJoin";
-            this.btnJoin.Size = new System.Drawing.Size(75, 23);
-            this.btnJoin.TabIndex = 3;
-            this.btnJoin.Text = "Join";
-            this.btnJoin.UseVisualStyleBackColor = true;
-            this.btnJoin.Click += new System.EventHandler(this.btnJoin_Click);
-            // 
             // btnNorth
             // 
             this.btnNorth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnNorth.Location = new System.Drawing.Point(34, 36);
+            this.btnNorth.Location = new System.Drawing.Point(34, 7);
             this.btnNorth.Name = "btnNorth";
             this.btnNorth.Size = new System.Drawing.Size(20, 23);
             this.btnNorth.TabIndex = 4;
@@ -96,7 +85,7 @@
             // btnSouth
             // 
             this.btnSouth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSouth.Location = new System.Drawing.Point(34, 79);
+            this.btnSouth.Location = new System.Drawing.Point(34, 50);
             this.btnSouth.Name = "btnSouth";
             this.btnSouth.Size = new System.Drawing.Size(20, 23);
             this.btnSouth.TabIndex = 5;
@@ -107,7 +96,7 @@
             // btnWest
             // 
             this.btnWest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnWest.Location = new System.Drawing.Point(15, 58);
+            this.btnWest.Location = new System.Drawing.Point(15, 29);
             this.btnWest.Name = "btnWest";
             this.btnWest.Size = new System.Drawing.Size(20, 23);
             this.btnWest.TabIndex = 6;
@@ -118,7 +107,7 @@
             // btnEast
             // 
             this.btnEast.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEast.Location = new System.Drawing.Point(53, 57);
+            this.btnEast.Location = new System.Drawing.Point(53, 28);
             this.btnEast.Name = "btnEast";
             this.btnEast.Size = new System.Drawing.Size(20, 23);
             this.btnEast.TabIndex = 7;
@@ -129,7 +118,7 @@
             // btnShoot
             // 
             this.btnShoot.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnShoot.Location = new System.Drawing.Point(3, 108);
+            this.btnShoot.Location = new System.Drawing.Point(3, 79);
             this.btnShoot.Name = "btnShoot";
             this.btnShoot.Size = new System.Drawing.Size(75, 23);
             this.btnShoot.TabIndex = 8;
@@ -188,16 +177,15 @@
             // pnlControl
             // 
             this.pnlControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlControl.Controls.Add(this.btnJoin);
             this.pnlControl.Controls.Add(this.btnNorth);
             this.pnlControl.Controls.Add(this.btnSouth);
             this.pnlControl.Controls.Add(this.btnWest);
             this.pnlControl.Controls.Add(this.btnEast);
             this.pnlControl.Controls.Add(this.btnShoot);
             this.pnlControl.Enabled = false;
-            this.pnlControl.Location = new System.Drawing.Point(449, 46);
+            this.pnlControl.Location = new System.Drawing.Point(449, 79);
             this.pnlControl.Name = "pnlControl";
-            this.pnlControl.Size = new System.Drawing.Size(84, 143);
+            this.pnlControl.Size = new System.Drawing.Size(84, 110);
             this.pnlControl.TabIndex = 13;
             // 
             // txtHost
@@ -264,11 +252,24 @@
             this.btnKeyboard.UseVisualStyleBackColor = true;
             this.btnKeyboard.Click += new System.EventHandler(this.button1_Click);
             // 
+            // btnJoin
+            // 
+            this.btnJoin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnJoin.Enabled = false;
+            this.btnJoin.Location = new System.Drawing.Point(452, 50);
+            this.btnJoin.Name = "btnJoin";
+            this.btnJoin.Size = new System.Drawing.Size(75, 23);
+            this.btnJoin.TabIndex = 20;
+            this.btnJoin.Text = "Join";
+            this.btnJoin.UseVisualStyleBackColor = true;
+            this.btnJoin.Click += new System.EventHandler(this.btnJoin_Click);
+            // 
             // frmDemoParser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(536, 463);
+            this.Controls.Add(this.btnJoin);
             this.Controls.Add(this.btnKeyboard);
             this.Controls.Add(this.chkEchoGameWorld);
             this.Controls.Add(this.pnlMapGUI);
@@ -297,7 +298,6 @@
 
         private System.Windows.Forms.TextBox txtSend;
         private System.Windows.Forms.Button btnSendRAW;
-        private System.Windows.Forms.Button btnJoin;
         private System.Windows.Forms.Button btnNorth;
         private System.Windows.Forms.Button btnSouth;
         private System.Windows.Forms.Button btnWest;
@@ -314,6 +314,7 @@
         private System.Windows.Forms.Panel pnlMapGUI;
         private System.Windows.Forms.CheckBox chkEchoGameWorld;
         private System.Windows.Forms.Button btnKeyboard;
+        private System.Windows.Forms.Button btnJoin;
     }
 }
 

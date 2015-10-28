@@ -20,7 +20,9 @@ namespace GameClient.Network.Messages
         public override void Execute()
         {
             GameWorld.Instance.Map = mapDetails;
-            GameWorld.Instance.State = GameWorld.GameWorldState.Running;
+            //The actual game begins when the first global update is received
+            GameWorld.Instance.State = GameWorld.GameWorldState.Ready;
+
         }
 
         //Obtain textual representation

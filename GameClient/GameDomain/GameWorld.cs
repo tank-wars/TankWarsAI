@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using GameClient.Network.Communicator;
+using GameClient.Network.Messages;
 
 namespace GameClient.GameDomain
 {
@@ -16,6 +17,8 @@ namespace GameClient.GameDomain
         /*
         Has the GameWorld been started?
         */
+        public bool InputAllowed { get; set; }
+
         public GameWorldState State { get { return state; }
             set {
                 state = value;
@@ -26,6 +29,16 @@ namespace GameClient.GameDomain
                     {
                         EventArgs args = new EventArgs();
                         
+                        handler(GameWorld.Instance, args);
+                    }
+                }
+                else if (state == GameWorldState.Running)
+                {
+                    EventHandler handler = GameWorld.Instance.GameStarted;
+                    if (handler != null)
+                    {
+                        EventArgs args = new EventArgs();
+
                         handler(GameWorld.Instance, args);
                     }
                 }
@@ -74,6 +87,7 @@ namespace GameClient.GameDomain
             {
                 coin.AdvanceFrame();
             }
+            InputAllowed = true;
         }
 
         /*
@@ -97,9 +111,12 @@ namespace GameClient.GameDomain
             set { lifePacks = value; }
         }
 
-        //event raised when game is finished
+        //events raised from GameWorld
         public event EventHandler GameFinished;
+        public event EventHandler GameStarted;
 
+        public event NegativeHonourEventHandler NegativeHonour;
+        public delegate void NegativeHonourEventHandler(object Sender, NegativeHonourMessage.NegativeHonourReason reason);
 
         private GameWorld()
         {
@@ -113,6 +130,17 @@ namespace GameClient.GameDomain
                 if(instance== null)
                     instance = new GameWorld();
                 return instance;
+            }
+        }
+        /*
+        Notifies the gameworld that a negative honour has occured
+        */
+        public void NotifyNegativeHonour(NegativeHonourMessage.NegativeHonourReason reason)
+        {
+            NegativeHonourEventHandler handler = NegativeHonour;
+            if (handler != null)
+            {
+                handler(this, reason);
             }
         }
 
@@ -161,7 +189,9 @@ namespace GameClient.GameDomain
 
         public enum GameWorldState
         {
-            NotStarted, Running, Finished
+            //Ready = Player has joined. But waiting for game to start
+            // Running = Sever has sent the first global update. Hence, game has begun
+            NotStarted, Ready ,Running, Finished
         }
 
     }

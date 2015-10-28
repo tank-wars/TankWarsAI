@@ -9,7 +9,7 @@ namespace GameClient.Network.Messages
     /*
     A Server originated message stating that it cannot honour a movement or shoot request
     */
-    class NegativeHonourMessage : ServerMessage
+    public class NegativeHonourMessage : ServerMessage
     {
         
         private NegativeHonourReason reason;
@@ -36,7 +36,8 @@ namespace GameClient.Network.Messages
         //TODO: Report to GameEngine about Negative Honour
         public override void Execute()
         {
-            
+
+            GameDomain.GameWorld.Instance.NotifyNegativeHonour(reason);
         }
 
         /*
@@ -44,6 +45,7 @@ namespace GameClient.Network.Messages
         */
         public override string ToString()
         {
+           
             switch(reason)
             {
                 case NegativeHonourReason.CellOccupied:
@@ -131,6 +133,10 @@ namespace GameClient.Network.Messages
                 return null;
             }
         }
+
+
+
+      
 
     }
 }

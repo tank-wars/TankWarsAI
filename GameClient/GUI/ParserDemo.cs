@@ -24,6 +24,8 @@ namespace GameClient
     */
     public partial class frmDemoParser : Form
     {
+      
+
         public frmDemoParser()
         {
             InitializeComponent();
@@ -32,12 +34,79 @@ namespace GameClient
         private void Form1_Load(object sender, EventArgs e)
         {
             Console.Title = "TankGame Parser Outputs";
-            GameWorld.Instance.GameFinished += Instance_GameFinished;  
+            GameWorld.Instance.GameFinished += GameWorld_GameFinished;
+            GameWorld.Instance.NegativeHonour += GameWorld_NegativeHonour;
+            GameWorld.Instance.GameStarted += GameWorld_GameStarted;
         }
 
-        private void Instance_GameFinished(object sender, EventArgs e)
+        private void GameWorld_GameStarted(object sender, EventArgs e)
+        {
+            EnableControl();
+        }
+
+        private void DisableControl()
+        {
+            useKeyboard = false;
+            pnlControl.Enabled = false;
+            btnKeyboard.Enabled = false;
+            
+        }
+
+        private void EnableControl()
+        {
+            if(!useKeyboard)
+            {
+                pnlControl.Enabled = true;
+                btnKeyboard.Enabled = true;
+            }
+           
+
+        }
+        private void GameWorld_NegativeHonour(object Sender, NegativeHonourMessage.NegativeHonourReason reason)
+        {
+            switch(reason)
+            {
+                case NegativeHonourMessage.NegativeHonourReason.CellOccupied:
+                    Console.Beep();
+                    break;
+                case NegativeHonourMessage.NegativeHonourReason.Dead:
+                    MessageBox.Show("You are Dead");
+                    DisableControl();
+                    break;
+
+                case NegativeHonourMessage.NegativeHonourReason.GameHasFinished:
+                    MessageBox.Show("Game has finished");
+                    DisableControl();
+                    break;
+                case NegativeHonourMessage.NegativeHonourReason.InvalidCell:
+                    Console.Beep();
+                    break;
+                case NegativeHonourMessage.NegativeHonourReason.InvalidContestant:
+                    MessageBox.Show("Join before playing the game");
+                    break;
+                case NegativeHonourMessage.NegativeHonourReason.Obstacle:
+                    Console.Beep();
+                    break;
+                case NegativeHonourMessage.NegativeHonourReason.PitFall:
+                    MessageBox.Show("You have fallen into water");
+                    DisableControl();
+                    break;
+                case NegativeHonourMessage.NegativeHonourReason.TooQuick:
+                    Console.Beep();
+                    break;
+
+            }
+        }
+
+        private void GameWorld_GameFinished(object sender, EventArgs e)
         {
             MessageBox.Show("Game Over");
+            this.Close();
+        }
+
+        private void NegativeHonourMessageReceived(object sender, EventArgs e)
+        {
+            MessageBox.Show(e.ToString());
             this.Close();
         }
 
@@ -49,8 +118,7 @@ namespace GameClient
             Communicator.Instance.MessageReceiverStopped += Instance_MessageReceiverStopped;
 
             btnSendRAW.Enabled = true;
-            pnlControl.Enabled = true;
-            btnKeyboard.Enabled = true;
+            btnJoin.Enabled = true;
             btnConnect.Enabled = false;
             txtHost.Enabled = false;
         }
@@ -149,12 +217,13 @@ namespace GameClient
         //Join to Server
         private void btnJoin_Click(object sender, EventArgs e)
         {
+           
             try {
                 ClientMessage msg = new JoinRequestMessage();
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
                 EchoSent(msg.GenerateStringMessage());
-                
-             }
+                btnJoin.Enabled = false;
+            }
             catch(System.IO.IOException ex)
             {
                 MessageBox.Show("Unable to Send Message");
@@ -171,6 +240,10 @@ namespace GameClient
         private void btnNorth_Click(object sender, EventArgs e)
         {
             try {
+                if (!GameWorld.Instance.InputAllowed)
+                    return;
+
+                GameWorld.Instance.InputAllowed = false;
                 ClientMessage msg = new PlayerMovementMessage(Direction.North);
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
                 EchoSent(msg.GenerateStringMessage());
@@ -189,7 +262,11 @@ namespace GameClient
         //Look, Move South
         private void btnSouth_Click(object sender, EventArgs e)
         {
-            try { 
+            try {
+                if (!GameWorld.Instance.InputAllowed)
+                    return;
+                GameWorld.Instance.InputAllowed = false;
+
                 ClientMessage msg = new PlayerMovementMessage(Direction.South);
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
                 EchoSent(msg.GenerateStringMessage());
@@ -210,6 +287,10 @@ namespace GameClient
         {
             try
             {
+                if (!GameWorld.Instance.InputAllowed)
+                    return;
+                GameWorld.Instance.InputAllowed = false;
+
                 ClientMessage msg = new PlayerMovementMessage(Direction.West);
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
                 EchoSent(msg.GenerateStringMessage());
@@ -229,7 +310,11 @@ namespace GameClient
         //Look, Move East
         private void btnEast_Click(object sender, EventArgs e)
         {
-            try { 
+            try {
+                if (!GameWorld.Instance.InputAllowed)
+                    return;
+                GameWorld.Instance.InputAllowed = false;
+
                 ClientMessage msg = new PlayerMovementMessage(Direction.East);
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
                 EchoSent(msg.GenerateStringMessage());
@@ -250,6 +335,10 @@ namespace GameClient
         {
             try
             {
+                if (!GameWorld.Instance.InputAllowed)
+                    return;
+                GameWorld.Instance.InputAllowed = false;
+
                 ClientMessage msg = new ShootMessage();
                 Communicator.Instance.SendMessage(msg.GenerateStringMessage());
                 EchoSent(msg.GenerateStringMessage());
@@ -352,12 +441,20 @@ namespace GameClient
 
         private void frmDemoParser_KeyDown(object sender, KeyEventArgs e)
         {
+
+
+
             if (!useKeyboard)
                 return;
 
             switch(e.KeyCode)
             {
                 case Keys.Up:
+                    if (!GameWorld.Instance.InputAllowed)
+                        break;
+
+                    GameWorld.Instance.InputAllowed = false;
+
                     try
                     {
                         ClientMessage msg = new PlayerMovementMessage(Direction.North);
@@ -375,6 +472,10 @@ namespace GameClient
                     }
                     break;
                 case Keys.Down:
+                    if (!GameWorld.Instance.InputAllowed)
+                        break;
+
+                    GameWorld.Instance.InputAllowed = false;
                     try
                     {
                         ClientMessage msg = new PlayerMovementMessage(Direction.South);
@@ -392,6 +493,10 @@ namespace GameClient
                     }
                     break;
                 case Keys.Left:
+                    if (!GameWorld.Instance.InputAllowed)
+                        break;
+
+                    GameWorld.Instance.InputAllowed = false;
                     try
                     {
                         ClientMessage msg = new PlayerMovementMessage(Direction.West);
@@ -409,6 +514,10 @@ namespace GameClient
                     }
                     break;
                 case Keys.Right:
+                    if (!GameWorld.Instance.InputAllowed)
+                        break;
+
+                    GameWorld.Instance.InputAllowed = false;
                     try
                     {
                         ClientMessage msg = new PlayerMovementMessage(Direction.East);
@@ -426,6 +535,10 @@ namespace GameClient
                     }
                     break;
                 case Keys.Space:
+                    if (!GameWorld.Instance.InputAllowed)
+                        break;
+
+                    GameWorld.Instance.InputAllowed = false;
                     try
                     {
                         ClientMessage msg = new ShootMessage();
@@ -444,8 +557,7 @@ namespace GameClient
                     break;
                 case Keys.Escape:
                     pnlControl.Enabled = true;
-                    btnConnect.Enabled = true;
-                    txtHost.Enabled = true;
+                    
                     txtSend.Enabled = true;
                     btnSendRAW.Enabled = true;
                     btnKeyboard.Enabled = true;
@@ -464,6 +576,7 @@ namespace GameClient
         {
             MessageBox.Show("Use Arrowkeys to Move and Space to Shoot. Press Escape to return to Manual Mode");
             pnlControl.Enabled = false;
+            btnJoin.Enabled = false;
             btnConnect.Enabled = false;
             txtHost.Enabled = false;
             txtSend.Enabled = false;
@@ -476,5 +589,6 @@ namespace GameClient
             chkEchoSent.Enabled = false;
             useKeyboard = true;
         }
+
     }
 }
