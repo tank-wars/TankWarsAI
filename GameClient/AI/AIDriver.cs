@@ -5,28 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GameClient.GameDomain;
-using GameClient.Foundation;
 using GameClient.Network.Messages;
 using GameClient.Network.Communicator;
 using GameClient.Foundation;
 
 namespace GameClient.AI
 {
-    /// <summary>
-    /// A simple console routine to show examples of the A* implementation in use
-    /// </summary>
     class AIDriver
     {
         private bool[,] map;
         private SearchParameters searchParameters;
         PathFinder pathFinder;
         List<Point> path;
-
-        /// <summary>
-        /// Outputs three examples of path finding to the Console.
-        /// </summary>
-        /// <remarks>The examples have copied from the unit tests!</remarks>
-        /// 
+        
         public AIDriver()
         {
             InitializeMap();
@@ -37,25 +28,30 @@ namespace GameClient.AI
             if (GameWorld.Instance.State == GameWorld.GameWorldState.Running)
             {
                 Point startPoint = new Point(GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.X, GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.Y);
-                Point endPoint = new Point(GameWorld.Instance.Players[1].Position.X, GameWorld.Instance.Players[1].Position.Y);
+
+                // Follow player 1 assuming that I'm player 0
+                // Point endPoint = new Point(GameWorld.Instance.Players[1].Position.X, GameWorld.Instance.Players[1].Position.Y);
+
+                // Follow coin pack
+                Point endPoint = new Point();
+
                 setBarriers();
                 setEndPoints(startPoint, endPoint);
                 pathFinder = new PathFinder(searchParameters);
                 path = pathFinder.FindPath();
 
-                ClientMessage msg = new PlayerMovementMessage(Direction.West);
-             //   Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                ClientMessage msg = new PlayerMovementMessage(decodeDirection(startPoint, path[1]));
+                if (GameWorld.Instance.InputAllowed)
+                {
+                  //  Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                  //  GameClient.GameDomain.GameWorld.Instance.InputAllowed = false;
+                }
 
                 ShowRoute("The algorithm should find a direct path without obstacles:", path);
                 Console.WriteLine();
             }
         }
 
-        /// <summary>
-        /// Displays the map and path as a simple grid to the console
-        /// </summary>
-        /// <param name="title">A descriptive title</param>
-        /// <param name="path">The points that comprise the path</param>
         private void ShowRoute(string title, IEnumerable<Point> path)
         {
             Console.WriteLine("{0}\r\n", title);
@@ -83,10 +79,7 @@ namespace GameClient.AI
                 Console.WriteLine();
             }
         }
-
-        /// <summary>
-        /// Creates a clear map with a start and end point and sets up the search parameters
-        /// </summary>
+        
         private void InitializeMap()
         {
             this.map = new bool[10, 10];
@@ -128,13 +121,48 @@ namespace GameClient.AI
 
         }
 
-        //public Direction decodeDirection(Point source, Point destination)
-        //{
-        //    if((destination.X - source.X < 0) && (destination.Y = source.Y > 0))
-        //    {
-        //        return Direction
-        //    }
-        //    return Direction.West;
-        //}
+        public Direction decodeDirection(Point source, Point destination)
+        {
+            // 1 2 3
+            // 8 S 4
+            // 7 6 5
+
+            if((destination.X - source.X < 0) && (destination.Y - source.Y < 0)) // 1
+            {
+                if (map[source.X, source.Y - 1]) return Direction.North;
+                else return Direction.West;
+            }
+            else if ((destination.X == source.X) && (destination.Y - source.Y < 0)) //2
+            {
+                return Direction.North;
+            }
+            else if ((destination.X - source.X > 0) && (destination.Y - source.Y < 0)) //3
+            {
+                if (map[source.X, source.Y - 1]) return Direction.North;
+                else return Direction.East;
+            }
+            else if ((destination.X - source.X > 0) && (destination.Y == source.Y)) //4 
+            {
+                return Direction.East;
+            }
+            else if ((destination.X - source.X > 0) && (destination.Y - source.Y > 0)) //5 
+            {
+                if (map[source.X, source.Y + 1]) return Direction.South;
+                else return Direction.East;
+            }
+            else if ((destination.X == source.X) && (destination.Y - source.Y > 0)) //6
+            {
+                return Direction.South;
+            }
+            else if ((destination.X - source.X < 0) && (destination.Y - source.Y > 0)) //7
+            {
+                if (map[source.X, source.Y + 1]) return Direction.South;
+                else return Direction.West;
+            }
+            else //8
+            {
+                return Direction.West;
+            }
+        }
     }
 }

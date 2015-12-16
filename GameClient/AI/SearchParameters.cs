@@ -7,9 +7,6 @@ using System.Threading.Tasks;
 
 namespace GameClient.AI
 {
-    /// <summary>
-    /// Defines the parameters which will be used to find a path across a section of the map
-    /// </summary>
     public class SearchParameters
     {
         public Point StartLocation { get; set; }

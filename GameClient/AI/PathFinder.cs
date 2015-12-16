@@ -15,11 +15,7 @@ namespace GameClient.AI
         private Node startNode;
         private Node endNode;
         private SearchParameters searchParameters;
-
-        /// <summary>
-        /// Create a new instance of PathFinder
-        /// </summary>
-        /// <param name="searchParameters"></param>
+        
         public PathFinder(SearchParameters searchParameters)
         {
             this.searchParameters = searchParameters;
@@ -28,14 +24,9 @@ namespace GameClient.AI
             this.startNode.State = NodeState.Open;
             this.endNode = this.nodes[searchParameters.EndLocation.X, searchParameters.EndLocation.Y];
         }
-
-        /// <summary>
-        /// Attempts to find a path from the start location to the end location based on the supplied SearchParameters
-        /// </summary>
-        /// <returns>A List of Points representing the path. If no path was found, the returned list is empty.</returns>
+        
         public List<Point> FindPath()
         {
-            // The start node is the first entry in the 'open' list
             List<Point> path = new List<Point>();
             bool success = Search(startNode);
             if (success)
@@ -54,11 +45,7 @@ namespace GameClient.AI
 
             return path;
         }
-
-        /// <summary>
-        /// Builds the node grid from a simple grid of booleans indicating areas which are and aren't walkable
-        /// </summary>
-        /// <param name="map">A boolean representation of a grid in which true = walkable and false = not walkable</param>
+        
         private void InitializeNodes(bool[,] map)
         {
             this.width = map.GetLength(0);
@@ -72,12 +59,7 @@ namespace GameClient.AI
                 }
             }
         }
-
-        /// <summary>
-        /// Attempts to find a path to the destination node using <paramref name="currentNode"/> as the starting location
-        /// </summary>
-        /// <param name="currentNode">The node from which to find a path</param>
-        /// <returns>True if a path to the destination has been found, otherwise false</returns>
+        
         private bool Search(Node currentNode)
         {
             // Set the current node to Closed since it cannot be traversed more than once
@@ -104,12 +86,7 @@ namespace GameClient.AI
             // The method returns false if this path leads to be a dead end
             return false;
         }
-
-        /// <summary>
-        /// Returns any nodes that are adjacent to <paramref name="fromNode"/> and may be considered to form the next step in the path
-        /// </summary>
-        /// <param name="fromNode">The node from which to return the next possible nodes in the path</param>
-        /// <returns>A list of next possible nodes in the path</returns>
+        
         private List<Node> GetAdjacentWalkableNodes(Node fromNode)
         {
             List<Node> walkableNodes = new List<Node>();
@@ -155,12 +132,7 @@ namespace GameClient.AI
 
             return walkableNodes;
         }
-
-        /// <summary>
-        /// Returns the eight locations immediately adjacent (orthogonally and diagonally) to <paramref name="fromLocation"/>
-        /// </summary>
-        /// <param name="fromLocation">The location from which to return all adjacent points</param>
-        /// <returns>The locations as an IEnumerable of Points</returns>
+        
         private static IEnumerable<Point> GetAdjacentLocations(Point fromLocation)
         {
             return new Point[]

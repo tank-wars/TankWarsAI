@@ -22,7 +22,7 @@ namespace GameClient.Network.Communicator
     {
         private Receiver receiver;
         private Configuration configuration;
-        
+
         private Communicator()
         {
 
@@ -167,7 +167,9 @@ namespace GameClient.Network.Communicator
             private BackgroundWorker backgroundWorker; //background thread used to listen
             private int port; //clients port
             
-            //Is the listener running
+            AIDriver aiDriver;
+
+            //Is the listener receiverning
             public bool IsListening
             {
                 get
@@ -179,7 +181,8 @@ namespace GameClient.Network.Communicator
                         
             public Receiver(Communicator.Configuration configuration)
             {
-                this.port = configuration.ClientPort;           
+                this.port = configuration.ClientPort;
+                aiDriver = new AIDriver();       
             }
 
             //Should be called when restarting listener
@@ -226,9 +229,8 @@ namespace GameClient.Network.Communicator
                         handler(Communicator.Instance, margs);
 
                         // Test code
-                        AIDriver aiDriver = new AIDriver();
+                       // GameClient.GameDomain.GameWorld.Instance.InputAllowed = true;
                         aiDriver.Run();
-
                     }
                 }
                 else if(e.ProgressPercentage == PROGRESS_ERROR)//an exception is thrown
