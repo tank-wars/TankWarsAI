@@ -20,7 +20,6 @@ namespace GameClient
     /*
         DEMO
         Demonstrates the Messages Received from Server and allows to send messages to server
-
     */
     public partial class frmDemoParser : Form
     {
@@ -94,7 +93,6 @@ namespace GameClient
                 case NegativeHonourMessage.NegativeHonourReason.TooQuick:
                     Console.Beep();
                     break;
-
             }
         }
 
@@ -103,13 +101,7 @@ namespace GameClient
             MessageBox.Show("Game Over");
             this.Close();
         }
-
-        private void NegativeHonourMessageReceived(object sender, EventArgs e)
-        {
-            MessageBox.Show(e.ToString());
-            this.Close();
-        }
-
+        
         private void btnConnect_Click(object sender, EventArgs e)
         {
             Communicator.Instance.Instalatize(new Communicator.Configuration(7000, txtHost.Text, 6000));

@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\Node.cs" />
     <Compile Include="Network\Messages\AbstractMessage.cs" />
     <Compile Include="GameDomain\Brick.cs" />
     <Compile Include="Network\Messages\ClientMessage.cs" />
@@ -109,6 +110,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
