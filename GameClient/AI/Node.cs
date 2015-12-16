@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleAStarExample
+namespace GameClient.AI
 {
     /// <summary>
     /// Represents a single node on a grid that is being searched for a path between two points

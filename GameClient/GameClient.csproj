@@ -49,7 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AI\AIDriver.cs" />
     <Compile Include="AI\Node.cs" />
+    <Compile Include="AI\NodeState.cs" />
+    <Compile Include="AI\PathFinder.cs" />
+    <Compile Include="AI\SearchParameters.cs" />
     <Compile Include="Network\Messages\AbstractMessage.cs" />
     <Compile Include="GameDomain\Brick.cs" />
     <Compile Include="Network\Messages\ClientMessage.cs" />

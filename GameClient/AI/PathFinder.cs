@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SimpleAStarExample
+namespace GameClient.AI
 {
     public class PathFinder
     {

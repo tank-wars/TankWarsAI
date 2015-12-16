@@ -74,7 +74,7 @@ namespace GameClient.Network.Messages
                     //S:P0;0,0;0#
                     PlayerDetails[] players = new PlayerDetails[sections.Length - 1];
                     //identify individual player details received
-                    for(int i = 1; i < sections.Length; i++)
+                    for (int i = 1; i < sections.Length; i++)
                     {
                         string section = sections[i];
                         string[] parameters = Tokenizer.TokernizeParameters(section);

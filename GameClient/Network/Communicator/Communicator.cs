@@ -11,6 +11,7 @@ using System.Net;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using GameClient.AI;
 
 namespace GameClient.Network.Communicator
 {
@@ -223,6 +224,11 @@ namespace GameClient.Network.Communicator
                         MessageReceivedEventArgs margs = new MessageReceivedEventArgs();
                         margs.Message = (string)e.UserState;
                         handler(Communicator.Instance, margs);
+
+                        // Test code
+                        AIDriver aiDriver = new AIDriver();
+                        aiDriver.Run();
+
                     }
                 }
                 else if(e.ProgressPercentage == PROGRESS_ERROR)//an exception is thrown

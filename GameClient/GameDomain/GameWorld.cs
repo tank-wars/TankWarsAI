@@ -19,6 +19,8 @@ namespace GameClient.GameDomain
         */
         public bool InputAllowed { get; set; }
 
+        public int MyPlayerNumber { get; set; } // Starting from zero
+
         public GameWorldState State { get { return state; }
             set {
                 state = value;

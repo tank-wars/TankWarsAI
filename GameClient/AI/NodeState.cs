@@ -1,4 +1,4 @@
-﻿namespace SimpleAStarExample
+﻿namespace GameClient.AI
 {
     /// <summary>
     /// Represents the search state of a Node
