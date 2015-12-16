@@ -76,6 +76,10 @@ namespace GameClient.GameDomain
 
         private GameWorldState state = GameWorldState.NotStarted;
 
+
+        public event EventHandler FrameAdvanced;
+
+
         /*
             Advance the gameworld to next frame
         */
@@ -90,6 +94,12 @@ namespace GameClient.GameDomain
                 coin.AdvanceFrame();
             }
             InputAllowed = true;
+
+            EventHandler handler = FrameAdvanced;
+            if (handler != null)
+            {
+                handler(this, new EventArgs());
+            }
         }
 
         /*

@@ -14,6 +14,7 @@ using GameClient.Network;
 using GameClient.Network.Communicator;
 using GameClient.Network.Messages;
 using GameClient.GUI;
+using GameClient.AI;
 
 namespace GameClient
 {
@@ -23,10 +24,11 @@ namespace GameClient
     */
     public partial class frmDemoParser : Form
     {
-      
+        AIDriver aiDriver;      
 
         public frmDemoParser()
         {
+            aiDriver = new AIDriver();
             InitializeComponent();
         }
 
@@ -36,6 +38,13 @@ namespace GameClient
             GameWorld.Instance.GameFinished += GameWorld_GameFinished;
             GameWorld.Instance.NegativeHonour += GameWorld_NegativeHonour;
             GameWorld.Instance.GameStarted += GameWorld_GameStarted;
+
+            GameWorld.Instance.FrameAdvanced += Instance_FrameAdvanced;
+        }
+
+        private void Instance_FrameAdvanced(object sender, EventArgs e)
+        {
+            aiDriver.Run();   
         }
 
         private void GameWorld_GameStarted(object sender, EventArgs e)

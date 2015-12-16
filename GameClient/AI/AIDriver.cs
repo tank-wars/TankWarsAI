@@ -17,7 +17,8 @@ namespace GameClient.AI
         private SearchParameters searchParameters;
         PathFinder pathFinder;
         List<Point> path;
-        
+        ClientMessage msg;
+
         public AIDriver()
         {
             InitializeMap();
@@ -30,21 +31,34 @@ namespace GameClient.AI
                 Point startPoint = new Point(GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.X, GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.Y);
 
                 // Follow player 1 assuming that I'm player 0
-                // Point endPoint = new Point(GameWorld.Instance.Players[1].Position.X, GameWorld.Instance.Players[1].Position.Y);
+                 Point endPoint = new Point(GameWorld.Instance.Players[1].Position.X, GameWorld.Instance.Players[1].Position.Y);
 
                 // Follow coin pack
-                Point endPoint = new Point();
+               // Point endPoint = new Point();
 
                 setBarriers();
                 setEndPoints(startPoint, endPoint);
                 pathFinder = new PathFinder(searchParameters);
                 path = pathFinder.FindPath();
-
-                ClientMessage msg = new PlayerMovementMessage(decodeDirection(startPoint, path[1]));
-                if (GameWorld.Instance.InputAllowed)
+                
+                if (path.Count>1 && path[1] != null)
                 {
-                  //  Communicator.Instance.SendMessage(msg.GenerateStringMessage());
-                  //  GameClient.GameDomain.GameWorld.Instance.InputAllowed = false;
+                    if(endPoint.X==path[1].X && endPoint.Y == path[1].Y)
+                    {
+                        msg = new ShootMessage();
+                        Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                    }
+                    else
+                    {
+                        msg = new PlayerMovementMessage(decodeDirection(startPoint, path[1]));
+
+                        if (GameWorld.Instance.InputAllowed)
+                        {
+                            Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+                            GameClient.GameDomain.GameWorld.Instance.InputAllowed = false;
+                        }
+                    }
+                    
                 }
 
                 ShowRoute("The algorithm should find a direct path without obstacles:", path);
@@ -130,7 +144,9 @@ namespace GameClient.AI
             if((destination.X - source.X < 0) && (destination.Y - source.Y < 0)) // 1
             {
                 if (map[source.X, source.Y - 1]) return Direction.North;
-                else return Direction.West;
+                else if (map[source.X - 1, source.Y]) return Direction.West;
+                else if (map[source.X + 1, source.Y]) return Direction.East;
+                else return Direction.South;
             }
             else if ((destination.X == source.X) && (destination.Y - source.Y < 0)) //2
             {
@@ -139,7 +155,9 @@ namespace GameClient.AI
             else if ((destination.X - source.X > 0) && (destination.Y - source.Y < 0)) //3
             {
                 if (map[source.X, source.Y - 1]) return Direction.North;
-                else return Direction.East;
+                else if (map[source.X + 1, source.Y]) return Direction.East;
+                else if (map[source.X, source.Y+1]) return Direction.South;
+                else return Direction.West;
             }
             else if ((destination.X - source.X > 0) && (destination.Y == source.Y)) //4 
             {
@@ -148,7 +166,9 @@ namespace GameClient.AI
             else if ((destination.X - source.X > 0) && (destination.Y - source.Y > 0)) //5 
             {
                 if (map[source.X, source.Y + 1]) return Direction.South;
-                else return Direction.East;
+                else if (map[source.X + 1, source.Y]) return Direction.East;
+                else if (map[source.X - 1, source.Y]) return Direction.West;
+                else return Direction.North;
             }
             else if ((destination.X == source.X) && (destination.Y - source.Y > 0)) //6
             {
@@ -157,7 +177,9 @@ namespace GameClient.AI
             else if ((destination.X - source.X < 0) && (destination.Y - source.Y > 0)) //7
             {
                 if (map[source.X, source.Y + 1]) return Direction.South;
-                else return Direction.West;
+                else if (map[source.X - 1, source.Y]) return Direction.West;
+                else if (map[source.X + 1, source.Y]) return Direction.East;
+                else return Direction.North;
             }
             else //8
             {
