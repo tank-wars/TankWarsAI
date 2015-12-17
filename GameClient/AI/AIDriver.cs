@@ -19,7 +19,7 @@ namespace GameClient.AI
         ClientMessage msg;
         Coordinate startPoint = new Coordinate();
         Coordinate endPoint = new Coordinate();
-        int flag = 1;
+        int flag = 0;
         int nowAtPath = 0;
         int coinToFollow = 0;
         
@@ -231,7 +231,11 @@ namespace GameClient.AI
         public void followTank(int tankNumber)
         {
             startPoint = new Coordinate(GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.X, GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.Y);
-            endPoint = new Coordinate(GameWorld.Instance.Players[tankNumber].Position.X, GameWorld.Instance.Players[tankNumber].Position.Y);
+
+            if (GameWorld.Instance.Players[tankNumber].Health>0)
+            {
+                endPoint = new Coordinate(GameWorld.Instance.Players[tankNumber].Position.X, GameWorld.Instance.Players[tankNumber].Position.Y);
+            }
             findPath();
         }
 
