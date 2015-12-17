@@ -19,7 +19,7 @@ namespace GameClient.AI
         ClientMessage msg;
         Coordinate startPoint = new Coordinate();
         Coordinate endPoint = new Coordinate();
-        int flag = 0;
+        int flag = 2;
         int nowAtPath = 0;
         int coinToFollow = 0;
         
@@ -261,15 +261,21 @@ namespace GameClient.AI
 
         public void followLifePack()
         {
-            List<LifePack> lifePacks = GameWorld.Instance.LifePacks;
-            Console.WriteLine(lifePacks.Count + " >>>>>>>>>>>>>>>");
-            if (lifePacks.Count > 0)
+            startPoint = new Coordinate(GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.X, GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.Y);
+            List<LifePack> lifePackList = GameWorld.Instance.LifePacks;
+            if (lifePackList.Count > coinToFollow && lifePackList[coinToFollow].IsAlive)
             {
-                endPoint = new Coordinate(lifePacks[0].Position.X, lifePacks[0].Position.Y);
+                endPoint = new Coordinate(lifePackList[coinToFollow].Position.X, lifePackList[coinToFollow].Position.Y);
+                findPath();
+            }
+            else if (lifePackList.Count > coinToFollow && !lifePackList[coinToFollow].IsAlive)
+            {
+                coinToFollow++;
+                followLifePack();
             }
             else
             {
-
+                //   Console.WriteLine("3 >>>>>>>>>>>>>>");
             }
         }
     }
