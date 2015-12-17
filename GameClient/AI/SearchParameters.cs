@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GameClient.Foundation;
 
 namespace GameClient.AI
 {
     public class SearchParameters
     {
-        public Point StartLocation { get; set; }
+        public Coordinate StartLocation { get; set; }
 
-        public Point EndLocation { get; set; }
+        public Coordinate EndLocation { get; set; }
 
         public bool[,] Map { get; set; }
 
-        public SearchParameters(Point startLocation, Point endLocation, bool[,] map)
+        public SearchParameters(Coordinate startLocation, Coordinate endLocation, bool[,] map)
         {
             this.StartLocation = startLocation;
             this.EndLocation = endLocation;

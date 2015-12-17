@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using GameClient.Foundation;
 
 namespace GameClient.AI
 {
@@ -11,7 +7,7 @@ namespace GameClient.AI
     {
         private Node parentNode;
         
-        public Point Location { get; private set; }
+        public Coordinate Location { get; private set; }
         
         public bool IsWalkable { get; set; }
         
@@ -36,9 +32,9 @@ namespace GameClient.AI
             }
         }
         
-        public Node(int x, int y, bool isWalkable, Point endLocation)
+        public Node(int x, int y, bool isWalkable, Coordinate endLocation)
         {
-            this.Location = new Point(x, y);
+            this.Location = new Coordinate(x, y);
             this.State = NodeState.Untested;
             this.IsWalkable = isWalkable;
             this.H = GetTraversalCost(this.Location, endLocation);
@@ -50,7 +46,7 @@ namespace GameClient.AI
             return string.Format("{0}, {1}: {2}", this.Location.X, this.Location.Y, this.State);
         }
         
-        internal static float GetTraversalCost(Point location, Point otherLocation)
+        internal static float GetTraversalCost(Coordinate location, Coordinate otherLocation)
         {
             float deltaX = otherLocation.X - location.X;
             float deltaY = otherLocation.Y - location.Y;

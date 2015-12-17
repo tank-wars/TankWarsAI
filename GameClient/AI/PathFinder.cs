@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using GameClient.Foundation;
 
 namespace GameClient.AI
 {
@@ -25,9 +21,9 @@ namespace GameClient.AI
             this.endNode = this.nodes[searchParameters.EndLocation.X, searchParameters.EndLocation.Y];
         }
         
-        public List<Point> FindPath()
+        public List<Coordinate> FindPath()
         {
-            List<Point> path = new List<Point>();
+            List<Coordinate> path = new List<Coordinate>();
             bool success = Search(startNode);
             if (success)
             {
@@ -71,7 +67,7 @@ namespace GameClient.AI
             foreach (var nextNode in nextNodes)
             {
                 // Check whether the end node has been reached
-                if (nextNode.Location == this.endNode.Location)
+                if ((nextNode.Location.X == this.endNode.Location.X) && (nextNode.Location.Y == this.endNode.Location.Y))
                 {
                     return true;
                 }
@@ -90,7 +86,7 @@ namespace GameClient.AI
         private List<Node> GetAdjacentWalkableNodes(Node fromNode)
         {
             List<Node> walkableNodes = new List<Node>();
-            IEnumerable<Point> nextLocations = GetAdjacentLocations(fromNode.Location);
+            IEnumerable<Coordinate> nextLocations = GetAdjacentLocations(fromNode.Location);
 
             foreach (var location in nextLocations)
             {
@@ -106,6 +102,9 @@ namespace GameClient.AI
                 if (!node.IsWalkable)
                     continue;
 
+                if (!this.nodes[x, fromNode.Location.Y].IsWalkable && !this.nodes[fromNode.Location.X, y].IsWalkable)
+                    continue;
+
                 // Ignore already-closed nodes
                 if (node.State == NodeState.Closed)
                     continue;
@@ -113,7 +112,7 @@ namespace GameClient.AI
                 // Already-open nodes are only added to the list if their G-value is lower going via this route.
                 if (node.State == NodeState.Open)
                 {
-                    float traversalCost = Node.GetTraversalCost(node.Location, node.ParentNode.Location);
+                    float traversalCost = Node.GetTraversalCost(node.Location, fromNode.Location);
                     float gTemp = fromNode.G + traversalCost;
                     if (gTemp < node.G)
                     {
@@ -133,18 +132,18 @@ namespace GameClient.AI
             return walkableNodes;
         }
         
-        private static IEnumerable<Point> GetAdjacentLocations(Point fromLocation)
+        private static IEnumerable<Coordinate> GetAdjacentLocations(Coordinate fromLocation)
         {
-            return new Point[]
+            return new Coordinate[]
             {
-                new Point(fromLocation.X-1, fromLocation.Y-1),
-                new Point(fromLocation.X-1, fromLocation.Y  ),
-                new Point(fromLocation.X-1, fromLocation.Y+1),
-                new Point(fromLocation.X,   fromLocation.Y+1),
-                new Point(fromLocation.X+1, fromLocation.Y+1),
-                new Point(fromLocation.X+1, fromLocation.Y  ),
-                new Point(fromLocation.X+1, fromLocation.Y-1),
-                new Point(fromLocation.X,   fromLocation.Y-1)
+                new Coordinate(fromLocation.X-1, fromLocation.Y-1),
+                new Coordinate(fromLocation.X-1, fromLocation.Y  ),
+                new Coordinate(fromLocation.X-1, fromLocation.Y+1),
+                new Coordinate(fromLocation.X,   fromLocation.Y+1),
+                new Coordinate(fromLocation.X+1, fromLocation.Y+1),
+                new Coordinate(fromLocation.X+1, fromLocation.Y  ),
+                new Coordinate(fromLocation.X+1, fromLocation.Y-1),
+                new Coordinate(fromLocation.X,   fromLocation.Y-1)
             };
         }
     }
