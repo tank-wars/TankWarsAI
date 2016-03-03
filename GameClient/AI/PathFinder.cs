@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GameClient.Foundation;
+using System;
 
 namespace GameClient.AI
 {
@@ -12,6 +13,9 @@ namespace GameClient.AI
         private Node endNode;
         private SearchParameters searchParameters;
         
+        public float TotalCost { get; set; }
+        public List<Coordinate> Path { get; set; }
+        
         public PathFinder(SearchParameters searchParameters)
         {
             this.searchParameters = searchParameters;
@@ -21,7 +25,7 @@ namespace GameClient.AI
             this.endNode = this.nodes[searchParameters.EndLocation.X, searchParameters.EndLocation.Y];
         }
         
-        public List<Coordinate> FindPath()
+        public void FindPath()
         {
             List<Coordinate> path = new List<Coordinate>();
             bool success = Search(startNode);
@@ -29,6 +33,7 @@ namespace GameClient.AI
             {
                 // If a path was found, follow the parents from the end node to build a list of locations
                 Node node = this.endNode;
+                this.TotalCost = this.endNode.F;
                 while (node.ParentNode != null)
                 {
                     path.Add(node.Location);
@@ -39,7 +44,7 @@ namespace GameClient.AI
                 path.Reverse();
             }
 
-            return path;
+            this.Path = path;
         }
         
         private void InitializeNodes(bool[,] map)

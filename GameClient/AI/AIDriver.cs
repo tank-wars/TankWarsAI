@@ -5,6 +5,8 @@ using GameClient.GameDomain;
 using GameClient.Network.Messages;
 using GameClient.Network.Communicator;
 using GameClient.Foundation;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GameClient.AI
 {
@@ -13,17 +15,31 @@ namespace GameClient.AI
         private bool[,] map;
         int width;
         int height;
-        private SearchParameters searchParameters;
-        PathFinder pathFinder;
+        //private SearchParameters searchParameters;
+        //PathFinder pathFinder;
+        List<PathFinder> shortestPathFinders;
         List<Coordinate> path;
         ClientMessage msg;
         Coordinate startPoint = new Coordinate();
         Coordinate endPoint = new Coordinate();
-        int flag = 2;
+        int flag = 0;
         int nowAtPath = 0;
         int coinToFollow = 0;
+
+        private static AIDriver instance = null;
+        public bool IsFollow { get; set; }
+
+        public static AIDriver Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new AIDriver();
+                return instance;
+            }
+        }
         
-        public AIDriver()
+        private AIDriver()
         {
             InitializeMap();
         }
@@ -32,33 +48,45 @@ namespace GameClient.AI
         {
             if (GameWorld.Instance.State == GameWorld.GameWorldState.Running)
             {
-                if (flag == 0) // Follow player 1 assuming that I'm player 0
+                IsFollow = true;
+                shortestPathFinders = new List<PathFinder>();
+                setBarriers();
+                startPoint = GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position;
+
+                Shooter shooter = new Shooter(this.map);
+                //Thread shooterThread = new Thread(shooter.run);
+                //shooterThread.Priority = ThreadPriority.Highest;
+                //shooterThread.Start();
+                Task shooterTask = Task.Factory.StartNew(() => shooter.run());
+                Task.WaitAll(shooterTask);
+
+                Task taskTank = Task.Factory.StartNew(() => this.nearestTank());
+                Task taskCoin = Task.Factory.StartNew(() => this.nearestCoin());
+                Task taskLifePack = Task.Factory.StartNew(() => this.nearsetLifePack());
+                Task.WaitAll(taskTank, taskCoin, taskLifePack);
+
+                shortestPathFinders.Sort((pathFinder1, pathFinder2) => pathFinder1.TotalCost.CompareTo(pathFinder2.TotalCost));
+                if (shortestPathFinders.Count > 0)
                 {
-                    followTank(1);
-                }
-                else if(flag == 1) // Follow latest coin pack
-                {
-                    followCoin();   
-                }
-                else if(flag == 2) // Follow latest life pack
-                {
-                    followLifePack();
+                    this.path = shortestPathFinders[0].Path;
                 }
 
-                if (path!=null && path.Count > nowAtPath)
+                if (path != null && path.Count > 0)
                 {
-                    if (GameWorld.Instance.InputAllowed)
+                    if (GameWorld.Instance.InputAllowed && IsFollow)
                     {
-                        msg = new PlayerMovementMessage(decodeDirection(startPoint, path[nowAtPath++]));
-                        Communicator.Instance.SendMessage(msg.GenerateStringMessage());
-                        GameClient.GameDomain.GameWorld.Instance.InputAllowed = false;
-
-                        // Print the found path in th console 
-                        ShowRoute("The algorithm should find a direct path without obstacles:", path);
-                        Console.WriteLine();
+                        move();
                     }
                 }
             }
+        }
+
+        public void move()
+        {
+            msg = new PlayerMovementMessage(decodeDirection(startPoint, path[0]));
+            Communicator.Instance.SendMessage(msg.GenerateStringMessage());
+            GameClient.GameDomain.GameWorld.Instance.InputAllowed = false;
+            Console.WriteLine("Moved >>>>>>>>>>>>>>");
         }
 
         private void ShowRoute(string title, IEnumerable<Coordinate> path)
@@ -68,12 +96,8 @@ namespace GameClient.AI
             {
                 for (int x = 0; x < this.map.GetLength(0); x++)
                 {
-                    if (this.searchParameters.StartLocation.Equals(new Coordinate(x, y)))
-                        // Show the start position
+                    if (GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.Equals(new Coordinate(x, y)))
                         Console.Write('S');
-                    else if (this.searchParameters.EndLocation.Equals(new Coordinate(x, y)))
-                        // Show the end position
-                        Console.Write('F');
                     else if (this.map[x, y] == false)
                         // Show any barriers
                         Console.Write('░');
@@ -100,11 +124,11 @@ namespace GameClient.AI
 
         }
 
-        private void setEndPoints(Coordinate start, Coordinate end)
+        private void setEndPoints(Coordinate start, Coordinate end, SearchParameters searchParameters)
         {
             var startLocation = start;
             var endLocation = end;
-            this.searchParameters = new SearchParameters(startLocation, endLocation, map);
+            searchParameters = new SearchParameters(startLocation, endLocation, map);
         }
 
         private void setBarriers()
@@ -175,108 +199,128 @@ namespace GameClient.AI
 
             if((destination.X - source.X < 0) && (destination.Y - source.Y < 0)) // 1
             {
-                if (map[source.X, source.Y - 1]) return Direction.North;
-                else if (map[source.X - 1, source.Y]) return Direction.West;
-                else if (map[source.X + 1, source.Y]) return Direction.East;
+                if (isWalkableCell(source.X, source.Y - 1)) return Direction.North;
+                else if (isWalkableCell(source.X - 1, source.Y)) return Direction.West;
+                else if (isWalkableCell(source.X + 1, source.Y)) return Direction.East;
                 else return Direction.South;
             }
             else if ((destination.X == source.X) && (destination.Y - source.Y < 0)) //2
             {
-                return Direction.North;
+                if (isWalkableCell(source.X, source.Y - 1)) return Direction.North;
+                else if (isWalkableCell(source.X - 1, source.Y)) return Direction.West;
+                else if (isWalkableCell(source.X + 1, source.Y)) return Direction.East;
+                else return Direction.South;
             }
             else if ((destination.X - source.X > 0) && (destination.Y - source.Y < 0)) //3
             {
-                if (map[source.X, source.Y - 1]) return Direction.North;
-                else if (map[source.X + 1, source.Y]) return Direction.East;
-                else if (map[source.X, source.Y+1]) return Direction.South;
+                if (isWalkableCell(source.X, source.Y - 1)) return Direction.North;
+                else if (isWalkableCell(source.X + 1, source.Y)) return Direction.East;
+                else if (isWalkableCell(source.X, source.Y+1)) return Direction.South;
                 else return Direction.West;
             }
             else if ((destination.X - source.X > 0) && (destination.Y == source.Y)) //4 
             {
-                return Direction.East;
+                if (isWalkableCell(source.X + 1, source.Y)) return Direction.East;
+                else if (isWalkableCell(source.X, source.Y - 1)) return Direction.North;
+                else if (isWalkableCell(source.X - 1, source.Y)) return Direction.West;
+                else return Direction.South;
             }
             else if ((destination.X - source.X > 0) && (destination.Y - source.Y > 0)) //5 
             {
-                if (map[source.X, source.Y + 1]) return Direction.South;
-                else if (map[source.X + 1, source.Y]) return Direction.East;
+                if (isWalkableCell(source.X, source.Y + 1)) return Direction.South;
+                else if (isWalkableCell(source.X + 1, source.Y)) return Direction.East;
                 else if (map[source.X - 1, source.Y]) return Direction.West;
                 else return Direction.North;
             }
             else if ((destination.X == source.X) && (destination.Y - source.Y > 0)) //6
             {
-                return Direction.South;
+                if (map[source.X, source.Y + 1]) return Direction.South;
+                else if (isWalkableCell(source.X + 1, source.Y)) return Direction.East;
+                else if (isWalkableCell(source.X - 1, source.Y)) return Direction.West;
+                else return Direction.North;
             }
             else if ((destination.X - source.X < 0) && (destination.Y - source.Y > 0)) //7
             {
-                if (map[source.X, source.Y + 1]) return Direction.South;
-                else if (map[source.X - 1, source.Y]) return Direction.West;
-                else if (map[source.X + 1, source.Y]) return Direction.East;
+                if (isWalkableCell(source.X, source.Y + 1)) return Direction.South;
+                else if (isWalkableCell(source.X - 1, source.Y)) return Direction.West;
+                else if (isWalkableCell(source.X + 1, source.Y)) return Direction.East;
                 else return Direction.North;
             }
             else //8
             {
-                return Direction.West;
+                if (isWalkableCell(source.X - 1, source.Y)) return Direction.West;
+                else if (isWalkableCell(source.X, source.Y + 1)) return Direction.South;
+                else if (isWalkableCell(source.X + 1, source.Y)) return Direction.East;
+                else return Direction.North;
             }
         }
 
-        public void findPath()
+        public bool isWalkableCell(int x, int y)
         {
-            setBarriers();
-            setEndPoints(startPoint, endPoint);
-            pathFinder = new PathFinder(searchParameters);
-            path = pathFinder.FindPath();
-            nowAtPath = 0;
+            if (x >= 0 && x < this.width && y >= 0 && y < this.height && this.map[x, y])
+                return true;
+            else
+                return false;
         }
 
-        public void followTank(int tankNumber)
+        public PathFinder findPath(Coordinate startPoint, Coordinate endPoint)
         {
-            startPoint = new Coordinate(GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.X, GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.Y);
+            SearchParameters searchParameters = new SearchParameters(startPoint, endPoint, map);
+            PathFinder pathFinder = new PathFinder(searchParameters);
+            pathFinder.FindPath();
+            return pathFinder;
+        }
 
-            if (GameWorld.Instance.Players[tankNumber].Health>0)
+        public void nearestTank()
+        {
+            PlayerDetails[] players = GameWorld.Instance.Players;
+            List<PathFinder> pathFinders = new List<PathFinder>();
+            Coordinate startPoint = new Coordinate(GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.X, GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.Y);
+            foreach (PlayerDetails player in players)
             {
-                endPoint = new Coordinate(GameWorld.Instance.Players[tankNumber].Position.X, GameWorld.Instance.Players[tankNumber].Position.Y);
+                if (player.Number != GameWorld.Instance.MyPlayerNumber && player.Health>0)
+                {
+                    pathFinders.Add(findPath(startPoint, player.Position));                       
+                }
             }
-            findPath();
+            pathFinders.Sort((pathFinder1, pathFinder2) => pathFinder1.TotalCost.CompareTo(pathFinder2.TotalCost));
+            if (pathFinders.Count > 0)
+                shortestPathFinders.Add(pathFinders[0]);
         }
 
-        public void followCoin()
+
+        public void nearestCoin()
         {
-            startPoint = new Coordinate(GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.X, GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.Y);
+            Coordinate startPoint = new Coordinate(GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.X, GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.Y);
             List<Coin> coinList = GameWorld.Instance.Coins;
-            if(coinList.Count>coinToFollow && coinList[coinToFollow].IsAlive)
+            List<PathFinder> pathFinders = new List<PathFinder>();
+            foreach (Coin coin in coinList)
             {
-                endPoint = new Coordinate(coinList[coinToFollow].Position.X, coinList[coinToFollow].Position.Y);
-                findPath();
+                if (coin.IsAlive)
+                {
+                    pathFinders.Add(findPath(startPoint, coin.Position));
+                }
             }
-            else if (coinList.Count > coinToFollow && !coinList[coinToFollow].IsAlive)
-            {
-                coinToFollow++;
-                followCoin();
-            }
-            else
-            {
-             //   Console.WriteLine("3 >>>>>>>>>>>>>>");
-            }
+            pathFinders.Sort((pathFinder1, pathFinder2) => pathFinder1.TotalCost.CompareTo(pathFinder2.TotalCost));
+            if (pathFinders.Count > 0)
+                shortestPathFinders.Add(pathFinders[0]);
         }
 
-        public void followLifePack()
+        public void nearsetLifePack()
         {
-            startPoint = new Coordinate(GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.X, GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.Y);
+            Coordinate startPoint = new Coordinate(GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.X, GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.Y);
             List<LifePack> lifePackList = GameWorld.Instance.LifePacks;
-            if (lifePackList.Count > coinToFollow && lifePackList[coinToFollow].IsAlive)
+            List<PathFinder> pathFinders = new List<PathFinder>();
+            foreach (LifePack lifePack in lifePackList)
             {
-                endPoint = new Coordinate(lifePackList[coinToFollow].Position.X, lifePackList[coinToFollow].Position.Y);
-                findPath();
+                if (lifePack.IsAlive)
+                {
+                    pathFinders.Add(findPath(startPoint, lifePack.Position));
+                }
             }
-            else if (lifePackList.Count > coinToFollow && !lifePackList[coinToFollow].IsAlive)
-            {
-                coinToFollow++;
-                followLifePack();
-            }
-            else
-            {
-                //   Console.WriteLine("3 >>>>>>>>>>>>>>");
-            }
+            pathFinders.Sort((pathFinder1, pathFinder2) => pathFinder1.TotalCost.CompareTo(pathFinder2.TotalCost));
+            if (pathFinders.Count > 0)
+                shortestPathFinders.Add(pathFinders[0]);
         }
     }
 }

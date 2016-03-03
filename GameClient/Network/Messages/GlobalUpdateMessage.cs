@@ -23,7 +23,6 @@ namespace GameClient.Network.Messages
             GameWorld.Instance.BrickState = globalUpdate.brickUpdate;
             GameWorld.Instance.Players = globalUpdate.PlayerUpdates;
             GameWorld.Instance.AdvanceFrame();
-            
         }
 
         //Obtain String representation

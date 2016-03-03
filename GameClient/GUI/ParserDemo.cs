@@ -28,7 +28,7 @@ namespace GameClient
 
         public frmDemoParser()
         {
-            aiDriver = new AIDriver();
+            aiDriver = AIDriver.Instance;
             InitializeComponent();
         }
 
