@@ -44,7 +44,7 @@ namespace GameClient
 
         private void Instance_FrameAdvanced(object sender, EventArgs e)
         {
-            aiDriver.Run();   
+           // aiDriver.Run();   
         }
 
         private void GameWorld_GameStarted(object sender, EventArgs e)
