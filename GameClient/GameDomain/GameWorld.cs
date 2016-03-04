@@ -76,6 +76,21 @@ namespace GameClient.GameDomain
         public event EventHandler FrameAdvanced;
 
 
+        private List<String> DeadPlayerNames = new List<String>();
+
+        public event PlayerDiedEventHandler PlayerDied;
+        public delegate void PlayerDiedEventHandler(object sender, PlayerDetails player);
+
+
+        void NotifyPlayerDied(PlayerDetails p)
+        {
+            PlayerDiedEventHandler handler = PlayerDied;
+            if (handler != null)
+            {
+                handler(this, p);
+            }
+        }
+
         /*
             Advance the gameworld to next frame
         */
@@ -96,6 +111,30 @@ namespace GameClient.GameDomain
             {
                 handler(this, new EventArgs());
             }
+
+
+            foreach (PlayerDetails p in Players)
+            {
+                if (p.Health <= 0)
+                {
+                    if (!DeadPlayerNames.Contains(p.Name))
+                    {
+                        DeadPlayerNames.Add(p.Name);
+
+                        Coin coin = new Coin();
+                        coin.Position = p.Position;
+                        coin.TimeLimit = Int32.MaxValue;
+                        coin.Value = p.Coins;
+
+                        GameWorld.Instance.Coins.Add(coin);
+                        //GameWorld.Instance.NotifyCoinPackAdded(coin);
+
+                        GameWorld.Instance.NotifyPlayerDied(p);
+
+                    }
+                }
+            }
+
         }
 
         /*
