@@ -24,7 +24,6 @@ namespace GameClient.AI
         Coordinate endPoint = new Coordinate();
         int flag = 0;
         int nowAtPath = 0;
-        int coinToFollow = 0;
 
         private static AIDriver instance = null;
         public bool IsFollow { get; set; }
@@ -53,17 +52,22 @@ namespace GameClient.AI
                 setBarriers();
                 startPoint = GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position;
 
-                Shooter shooter = new Shooter(this.map);
-                //Thread shooterThread = new Thread(shooter.run);
-                //shooterThread.Priority = ThreadPriority.Highest;
-                //shooterThread.Start();
-                Task shooterTask = Task.Factory.StartNew(() => shooter.run());
-                Task.WaitAll(shooterTask);
+                //Using multi threading
+                //Shooter shooter = new Shooter(this.map);
+                //Task shooterTask = Task.Factory.StartNew(() => shooter.run());
+                //Task.WaitAll(shooterTask);
 
-                Task taskTank = Task.Factory.StartNew(() => this.nearestTank());
-                Task taskCoin = Task.Factory.StartNew(() => this.nearestCoin());
-                Task taskLifePack = Task.Factory.StartNew(() => this.nearsetLifePack());
-                Task.WaitAll(taskTank, taskCoin, taskLifePack);
+                //Task taskTank = Task.Factory.StartNew(() => this.nearestTank());
+                //Task taskCoin = Task.Factory.StartNew(() => this.nearestCoin());
+                //Task taskLifePack = Task.Factory.StartNew(() => this.nearsetLifePack());
+                //Task.WaitAll(taskTank, taskCoin, taskLifePack);
+
+                //Using single thread
+                Shooter shooter = new Shooter(this.map);
+                shooter.run();
+                this.nearestTank();
+                this.nearestCoin();
+                this.nearsetLifePack();
 
                 shortestPathFinders.Sort((pathFinder1, pathFinder2) => pathFinder1.TotalCost.CompareTo(pathFinder2.TotalCost));
                 if (shortestPathFinders.Count > 0)
@@ -87,6 +91,7 @@ namespace GameClient.AI
             Communicator.Instance.SendMessage(msg.GenerateStringMessage());
             GameClient.GameDomain.GameWorld.Instance.InputAllowed = false;
             Console.WriteLine("Moved >>>>>>>>>>>>>>");
+            ShowRoute("Current route", path);
         }
 
         private void ShowRoute(string title, IEnumerable<Coordinate> path)
@@ -293,15 +298,24 @@ namespace GameClient.AI
         {
             Coordinate startPoint = new Coordinate(GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.X, GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.Y);
             List<Coin> coinList = GameWorld.Instance.Coins;
+            List<Coin> coinsToFollow = new List<Coin>();
             List<PathFinder> pathFinders = new List<PathFinder>();
             foreach (Coin coin in coinList)
             {
                 if (coin.IsAlive)
                 {
                     pathFinders.Add(findPath(startPoint, coin.Position));
+                    coinsToFollow.Add(coin);
                 }
             }
             pathFinders.Sort((pathFinder1, pathFinder2) => pathFinder1.TotalCost.CompareTo(pathFinder2.TotalCost));
+            for(int i = 0;i< pathFinders.Count;i++)
+            {
+                if (pathFinders[i].Path.Count > coinsToFollow[i].RemainingTime / 1000)
+                {
+                    pathFinders.Remove(pathFinders[i]);
+                }
+            }
             if (pathFinders.Count > 0)
                 shortestPathFinders.Add(pathFinders[0]);
         }
@@ -310,15 +324,24 @@ namespace GameClient.AI
         {
             Coordinate startPoint = new Coordinate(GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.X, GameWorld.Instance.Players[GameWorld.Instance.MyPlayerNumber].Position.Y);
             List<LifePack> lifePackList = GameWorld.Instance.LifePacks;
+            List<LifePack> lifePackToFollow = new List<LifePack>();
             List<PathFinder> pathFinders = new List<PathFinder>();
             foreach (LifePack lifePack in lifePackList)
             {
                 if (lifePack.IsAlive)
                 {
                     pathFinders.Add(findPath(startPoint, lifePack.Position));
+                    lifePackToFollow.Add(lifePack);
                 }
             }
             pathFinders.Sort((pathFinder1, pathFinder2) => pathFinder1.TotalCost.CompareTo(pathFinder2.TotalCost));
+            for(int i = 0;i< pathFinders.Count;i++)
+            {
+                if (pathFinders[i].Path.Count > lifePackToFollow[i].RemainingTime / 1000)
+                {
+                    pathFinders.Remove(pathFinders[i]);
+                }
+            }
             if (pathFinders.Count > 0)
                 shortestPathFinders.Add(pathFinders[0]);
         }
