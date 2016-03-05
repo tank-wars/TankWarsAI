@@ -423,8 +423,11 @@ namespace GameClient
             if (world.Players != null)
                 foreach (PlayerDetails player in world.Players)
                 {
-                    int index = Convert.ToInt32(player.Name.Substring(1));
-                    gui.DrawTank(index, player.Position, player.Direction, player.IsShooting);
+                    if (player.Health > 0)
+                    {
+                        int index = Convert.ToInt32(player.Name.Substring(1));
+                        gui.DrawTank(index, player.Position, player.Direction, player.IsShooting);
+                    }
                 }
 
         
